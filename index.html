@@ -394,28 +394,992 @@
   const { useState, useEffect, useMemo, useRef, useCallback } = React;
   const SEED_USERS = [
     {
-      id: "u_johndoe",
-      name: "John",
-      lastName: "Doe",
-      email: "john.doe@acme.corp",
-      role: "",
-      org: "Acme Corp",
-      country: "Canada",
-      tz: "EST",
-      color: "#6366f1",
-      initials: "JD",
-      isClient: false,
-      isPartner: false,
-      isManager: true,
-      isSuperAdmin: true
+        "id": "u_johndoe",
+        "name": "John",
+        "lastName": "Doe",
+        "email": "john.doe@acme.corp",
+        "role": "Project Manager",
+        "org": "Acme Corp",
+        "country": "Canada",
+        "tz": "EST",
+        "color": "#6366f1",
+        "initials": "JD",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": true,
+        "isSuperAdmin": true,
+        "managerId": null
+    },
+    {
+        "id": "u_janedoe",
+        "name": "Jane",
+        "lastName": "Doe",
+        "email": "jane.doe@tollbrothers.com",
+        "role": "Project Manager",
+        "org": "Toll Brothers",
+        "country": "US",
+        "tz": "EST",
+        "color": "#0ea5e9",
+        "initials": "JD",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": true,
+        "isSuperAdmin": false,
+        "managerId": "u_johndoe"
+    },
+    {
+        "id": "u_dkim",
+        "name": "David",
+        "lastName": "Kim",
+        "email": "d.kim@acme.corp",
+        "role": "Foreman",
+        "org": "Acme Corp",
+        "country": "Canada",
+        "tz": "EST",
+        "color": "#f59e0b",
+        "initials": "DK",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": true,
+        "isSuperAdmin": false,
+        "managerId": "u_johndoe"
+    },
+    {
+        "id": "u_ewright",
+        "name": "Emily",
+        "lastName": "Wright",
+        "email": "e.wright@acme.corp",
+        "role": "Architect",
+        "org": "Acme Corp",
+        "country": "Canada",
+        "tz": "EST",
+        "color": "#8b5cf6",
+        "initials": "EW",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_johndoe"
+    },
+    {
+        "id": "u_mturner",
+        "name": "Mike",
+        "lastName": "Turner",
+        "email": "m.turner@acme.corp",
+        "role": "Carpenter",
+        "org": "Acme Corp",
+        "country": "Canada",
+        "tz": "EST",
+        "color": "#d97706",
+        "initials": "MT",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_dkim"
+    },
+    {
+        "id": "u_schen",
+        "name": "Sarah",
+        "lastName": "Chen",
+        "email": "s.chen@acme.corp",
+        "role": "Electrician",
+        "org": "Acme Corp",
+        "country": "Canada",
+        "tz": "EST",
+        "color": "#ec4899",
+        "initials": "SC",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_dkim"
+    },
+    {
+        "id": "u_rgarcia",
+        "name": "Roberto",
+        "lastName": "Garcia",
+        "email": "r.garcia@acme.corp",
+        "role": "Plumber",
+        "org": "Acme Corp",
+        "country": "US",
+        "tz": "CST",
+        "color": "#14b8a6",
+        "initials": "RG",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_dkim"
+    },
+    {
+        "id": "u_tbradley",
+        "name": "Tom",
+        "lastName": "Bradley",
+        "email": "t.bradley@acme.corp",
+        "role": "Safety Officer",
+        "org": "Acme Corp",
+        "country": "Canada",
+        "tz": "EST",
+        "color": "#ef4444",
+        "initials": "TB",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_johndoe"
+    },
+    {
+        "id": "u_dhall",
+        "name": "Derek",
+        "lastName": "Hall",
+        "email": "d.hall@acme.corp",
+        "role": "HVAC Technician",
+        "org": "Acme Corp",
+        "country": "Canada",
+        "tz": "EST",
+        "color": "#06b6d4",
+        "initials": "DH",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_dkim"
+    },
+    {
+        "id": "u_cmendoza",
+        "name": "Carlos",
+        "lastName": "Mendoza",
+        "email": "c.mendoza@tollbrothers.com",
+        "role": "Mason",
+        "org": "Toll Brothers",
+        "country": "US",
+        "tz": "CST",
+        "color": "#a855f7",
+        "initials": "CM",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_janedoe"
+    },
+    {
+        "id": "u_jsteel",
+        "name": "James",
+        "lastName": "Steel",
+        "email": "j.steel@tollbrothers.com",
+        "role": "Welder",
+        "org": "Toll Brothers",
+        "country": "US",
+        "tz": "EST",
+        "color": "#64748b",
+        "initials": "JS",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_janedoe"
+    },
+    {
+        "id": "u_lpark",
+        "name": "Lisa",
+        "lastName": "Park",
+        "email": "l.park@tollbrothers.com",
+        "role": "Heavy Equipment Operator",
+        "org": "Toll Brothers",
+        "country": "US",
+        "tz": "PST",
+        "color": "#f97316",
+        "initials": "LP",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_janedoe"
+    },
+    {
+        "id": "u_npatel",
+        "name": "Nina",
+        "lastName": "Patel",
+        "email": "n.patel@tollbrothers.com",
+        "role": "Surveyor",
+        "org": "Toll Brothers",
+        "country": "US",
+        "tz": "EST",
+        "color": "#10b981",
+        "initials": "NP",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_janedoe"
+    },
+    {
+        "id": "u_afoster",
+        "name": "Amy",
+        "lastName": "Foster",
+        "email": "a.foster@tollbrothers.com",
+        "role": "Painter",
+        "org": "Toll Brothers",
+        "country": "US",
+        "tz": "EST",
+        "color": "#84cc16",
+        "initials": "AF",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_janedoe"
+    },
+    {
+        "id": "u_btorres",
+        "name": "Ben",
+        "lastName": "Torres",
+        "email": "b.torres@tollbrothers.com",
+        "role": "Roofer",
+        "org": "Toll Brothers",
+        "country": "US",
+        "tz": "CST",
+        "color": "#e11d48",
+        "initials": "BT",
+        "isClient": false,
+        "isPartner": false,
+        "isManager": false,
+        "isSuperAdmin": false,
+        "managerId": "u_janedoe"
     }
-  ];
-  const SEED_PROJECTS = [];
-  const SEED_TASKS = [];
+];
+  const SEED_PROJECTS = [
+    {
+        "id": "p_acme",
+        "name": "Acme Corp HQ Expansion",
+        "clientName": "Acme Corp",
+        "description": "Major 6-storey headquarters expansion including new east wing, underground parking, and rooftop terrace. Total 42,000 sq ft.",
+        "status": "Active",
+        "color": "#f59e0b",
+        "startDate": "2025-08-04",
+        "endDate": "2026-07-31",
+        "pmId": "u_johndoe",
+        "resourceIds": [
+            "u_johndoe",
+            "u_dkim",
+            "u_ewright",
+            "u_mturner",
+            "u_schen",
+            "u_rgarcia",
+            "u_tbradley",
+            "u_dhall",
+            "u_npatel"
+        ]
+    },
+    {
+        "id": "p_toll",
+        "name": "Riverside Condominiums",
+        "clientName": "Toll Brothers",
+        "description": "Luxury 4-block residential condominium development with 120 units, underground parking, and shared amenities.",
+        "status": "Active",
+        "color": "#0ea5e9",
+        "startDate": "2025-10-06",
+        "endDate": "2026-11-30",
+        "pmId": "u_janedoe",
+        "resourceIds": [
+            "u_janedoe",
+            "u_cmendoza",
+            "u_jsteel",
+            "u_lpark",
+            "u_npatel",
+            "u_afoster",
+            "u_btorres",
+            "u_tbradley",
+            "u_rgarcia"
+        ]
+    }
+];
+  const SEED_TASKS = [
+    {
+        "id": "t_a1",
+        "projectId": "p_acme",
+        "title": "Site Survey & Geotechnical Assessment",
+        "type": "milestone",
+        "status": "Completed",
+        "priority": "high",
+        "startDate": "2025-08-04",
+        "dueDate": "2025-08-15",
+        "assigneeIds": [
+            "u_npatel",
+            "u_ewright"
+        ],
+        "percentDone": 100,
+        "estimatedHours": 40,
+        "parentId": null,
+        "description": "Complete topographic survey, soil testing, and geotechnical report before breaking ground."
+    },
+    {
+        "id": "t_a2",
+        "projectId": "p_acme",
+        "title": "Demolition & Site Clearing",
+        "type": "task",
+        "status": "Completed",
+        "priority": "high",
+        "startDate": "2025-08-18",
+        "dueDate": "2025-09-05",
+        "assigneeIds": [
+            "u_lpark",
+            "u_dkim"
+        ],
+        "percentDone": 100,
+        "estimatedHours": 120,
+        "parentId": null,
+        "description": "Remove existing structures, clear site, and prepare for excavation."
+    },
+    {
+        "id": "t_a3",
+        "projectId": "p_acme",
+        "title": "Foundation Excavation",
+        "type": "task",
+        "status": "Completed",
+        "priority": "high",
+        "startDate": "2025-09-08",
+        "dueDate": "2025-09-26",
+        "assigneeIds": [
+            "u_lpark",
+            "u_rgarcia",
+            "u_dkim"
+        ],
+        "percentDone": 100,
+        "estimatedHours": 200,
+        "parentId": null,
+        "description": "Excavate to bearing depth, install shoring, rough grading for footings."
+    },
+    {
+        "id": "t_a4",
+        "projectId": "p_acme",
+        "title": "Foundation Pouring & Concrete Work",
+        "type": "task",
+        "status": "Completed",
+        "priority": "high",
+        "startDate": "2025-09-29",
+        "dueDate": "2025-10-24",
+        "assigneeIds": [
+            "u_cmendoza",
+            "u_mturner",
+            "u_dkim"
+        ],
+        "percentDone": 100,
+        "estimatedHours": 280,
+        "parentId": null,
+        "description": "Form and pour spread footings, grade beams, and slab on grade. Cure and strip forms."
+    },
+    {
+        "id": "t_a5",
+        "projectId": "p_acme",
+        "title": "Underground Plumbing Rough-In",
+        "type": "task",
+        "status": "Completed",
+        "priority": "normal",
+        "startDate": "2025-10-06",
+        "dueDate": "2025-10-17",
+        "assigneeIds": [
+            "u_rgarcia"
+        ],
+        "percentDone": 100,
+        "estimatedHours": 80,
+        "parentId": null,
+        "description": "Install below-slab sanitary, storm, and domestic water piping before slab pour."
+    },
+    {
+        "id": "t_a6",
+        "projectId": "p_acme",
+        "title": "Steel Frame Erection",
+        "type": "task",
+        "status": "In Progress",
+        "priority": "high",
+        "startDate": "2025-10-27",
+        "dueDate": "2026-02-27",
+        "assigneeIds": [
+            "u_jsteel",
+            "u_dkim",
+            "u_tbradley"
+        ],
+        "percentDone": 72,
+        "estimatedHours": 600,
+        "parentId": null,
+        "description": "Erect structural steel columns, beams, and decking for all 6 floors. Includes anchor bolts and connections."
+    },
+    {
+        "id": "t_a7",
+        "projectId": "p_acme",
+        "title": "Electrical Rough-In",
+        "type": "task",
+        "status": "In Progress",
+        "priority": "normal",
+        "startDate": "2025-12-01",
+        "dueDate": "2026-04-30",
+        "assigneeIds": [
+            "u_schen",
+            "u_dkim"
+        ],
+        "percentDone": 38,
+        "estimatedHours": 400,
+        "parentId": null,
+        "description": "Install conduit, panels, junction boxes, and wire pulls for all electrical systems floors 1-6."
+    },
+    {
+        "id": "t_a8",
+        "projectId": "p_acme",
+        "title": "Plumbing Rough-In",
+        "type": "task",
+        "status": "In Progress",
+        "priority": "normal",
+        "startDate": "2025-12-08",
+        "dueDate": "2026-04-17",
+        "assigneeIds": [
+            "u_rgarcia"
+        ],
+        "percentDone": 30,
+        "estimatedHours": 320,
+        "parentId": null,
+        "description": "Install DWV and supply piping above slab for all floors. Coordinate with structural and electrical."
+    },
+    {
+        "id": "t_a9",
+        "projectId": "p_acme",
+        "title": "Exterior Masonry & Brickwork",
+        "type": "task",
+        "status": "In Progress",
+        "priority": "normal",
+        "startDate": "2026-01-05",
+        "dueDate": "2026-05-29",
+        "assigneeIds": [
+            "u_cmendoza"
+        ],
+        "percentDone": 22,
+        "estimatedHours": 480,
+        "parentId": null,
+        "description": "Install brick veneer and stone facade on east and north elevations per architectural drawings."
+    },
+    {
+        "id": "t_a10",
+        "projectId": "p_acme",
+        "title": "HVAC System Installation",
+        "type": "task",
+        "status": "Not Started",
+        "priority": "normal",
+        "startDate": "2026-03-02",
+        "dueDate": "2026-06-12",
+        "assigneeIds": [
+            "u_dhall"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 360,
+        "parentId": null,
+        "description": "Install AHUs, VAV boxes, ductwork, controls, and refrigerant piping for all zones."
+    },
+    {
+        "id": "t_a11",
+        "projectId": "p_acme",
+        "title": "Roofing System Installation",
+        "type": "task",
+        "status": "Not Started",
+        "priority": "normal",
+        "startDate": "2026-04-13",
+        "dueDate": "2026-05-22",
+        "assigneeIds": [
+            "u_btorres"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 160,
+        "parentId": null,
+        "description": "Install TPO membrane roofing, insulation, flashings, and roof drains on all roof levels."
+    },
+    {
+        "id": "t_a12",
+        "projectId": "p_acme",
+        "title": "Interior Drywall & Insulation",
+        "type": "task",
+        "status": "Not Started",
+        "priority": "normal",
+        "startDate": "2026-04-27",
+        "dueDate": "2026-06-19",
+        "assigneeIds": [
+            "u_mturner",
+            "u_dkim"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 400,
+        "parentId": null,
+        "description": "Frame non-structural partitions, hang drywall, tape, mud, and install batt insulation."
+    },
+    {
+        "id": "t_a13",
+        "projectId": "p_acme",
+        "title": "Interior Painting & Finishing",
+        "type": "task",
+        "status": "Not Started",
+        "priority": "low",
+        "startDate": "2026-06-01",
+        "dueDate": "2026-07-10",
+        "assigneeIds": [
+            "u_afoster"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 240,
+        "parentId": null,
+        "description": "Prime and paint all interior surfaces. Install baseboards, trims, and final hardware."
+    },
+    {
+        "id": "t_a14",
+        "projectId": "p_acme",
+        "title": "Safety Inspection & Sign-Off",
+        "type": "deliverable",
+        "status": "Not Started",
+        "priority": "high",
+        "startDate": "2026-07-13",
+        "dueDate": "2026-07-25",
+        "assigneeIds": [
+            "u_tbradley",
+            "u_johndoe"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 40,
+        "parentId": null,
+        "description": "Complete site safety audit, fire marshal inspection, and occupancy permit application."
+    },
+    {
+        "id": "t_a15",
+        "projectId": "p_acme",
+        "title": "Project Handover & Commissioning",
+        "type": "milestone",
+        "status": "Not Started",
+        "priority": "high",
+        "startDate": "2026-07-27",
+        "dueDate": "2026-07-31",
+        "assigneeIds": [
+            "u_johndoe",
+            "u_ewright"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 24,
+        "parentId": null,
+        "description": "Final walkthrough, punch list completion, as-built documentation, and building handover to client."
+    },
+    {
+        "id": "t_t1",
+        "projectId": "p_toll",
+        "title": "Site Survey & Boundary Staking",
+        "type": "milestone",
+        "status": "Completed",
+        "priority": "high",
+        "startDate": "2025-10-06",
+        "dueDate": "2025-10-17",
+        "assigneeIds": [
+            "u_npatel"
+        ],
+        "percentDone": 100,
+        "estimatedHours": 32,
+        "parentId": null,
+        "description": "Full topographic survey, legal boundary staking, and utility locate for all 4 blocks."
+    },
+    {
+        "id": "t_t2",
+        "projectId": "p_toll",
+        "title": "Site Clearing & Tree Removal",
+        "type": "task",
+        "status": "Completed",
+        "priority": "high",
+        "startDate": "2025-10-20",
+        "dueDate": "2025-11-07",
+        "assigneeIds": [
+            "u_lpark",
+            "u_dkim"
+        ],
+        "percentDone": 100,
+        "estimatedHours": 120,
+        "parentId": null,
+        "description": "Clear vegetation, remove trees per arborist report, grub stumps, and rough grade site."
+    },
+    {
+        "id": "t_t3",
+        "projectId": "p_toll",
+        "title": "Grading, Earthwork & Storm Drainage",
+        "type": "task",
+        "status": "Completed",
+        "priority": "high",
+        "startDate": "2025-11-10",
+        "dueDate": "2025-12-05",
+        "assigneeIds": [
+            "u_lpark",
+            "u_rgarcia"
+        ],
+        "percentDone": 100,
+        "estimatedHours": 200,
+        "parentId": null,
+        "description": "Cut and fill to design grades, install storm catch basins, culverts, and outfall structures."
+    },
+    {
+        "id": "t_t4",
+        "projectId": "p_toll",
+        "title": "Underground Services (Water, Sewer, Gas)",
+        "type": "task",
+        "status": "In Progress",
+        "priority": "high",
+        "startDate": "2025-12-08",
+        "dueDate": "2026-03-06",
+        "assigneeIds": [
+            "u_rgarcia",
+            "u_dkim"
+        ],
+        "percentDone": 62,
+        "estimatedHours": 280,
+        "parentId": null,
+        "description": "Excavate, install, and backfill municipal water, sanitary sewer, and gas service connections."
+    },
+    {
+        "id": "t_t5",
+        "projectId": "p_toll",
+        "title": "Foundation \u2014 Block A & B",
+        "type": "task",
+        "status": "In Progress",
+        "priority": "high",
+        "startDate": "2026-01-05",
+        "dueDate": "2026-03-20",
+        "assigneeIds": [
+            "u_cmendoza",
+            "u_lpark"
+        ],
+        "percentDone": 68,
+        "estimatedHours": 320,
+        "parentId": null,
+        "description": "Form, pour, and strip concrete footings and foundation walls for Blocks A and B."
+    },
+    {
+        "id": "t_t6",
+        "projectId": "p_toll",
+        "title": "Foundation \u2014 Block C & D",
+        "type": "task",
+        "status": "In Progress",
+        "priority": "high",
+        "startDate": "2026-01-19",
+        "dueDate": "2026-04-10",
+        "assigneeIds": [
+            "u_cmendoza",
+            "u_lpark"
+        ],
+        "percentDone": 40,
+        "estimatedHours": 320,
+        "parentId": null,
+        "description": "Form, pour, and strip concrete footings and foundation walls for Blocks C and D."
+    },
+    {
+        "id": "t_t7",
+        "projectId": "p_toll",
+        "title": "Structural Steel & Welding \u2014 Block A",
+        "type": "task",
+        "status": "In Progress",
+        "priority": "normal",
+        "startDate": "2026-02-02",
+        "dueDate": "2026-04-24",
+        "assigneeIds": [
+            "u_jsteel",
+            "u_tbradley"
+        ],
+        "percentDone": 28,
+        "estimatedHours": 280,
+        "parentId": null,
+        "description": "Fabricate and erect structural steel frame, connections, and floor decking for Block A."
+    },
+    {
+        "id": "t_t8",
+        "projectId": "p_toll",
+        "title": "Structural Steel & Welding \u2014 Block B",
+        "type": "task",
+        "status": "Not Started",
+        "priority": "normal",
+        "startDate": "2026-04-06",
+        "dueDate": "2026-06-19",
+        "assigneeIds": [
+            "u_jsteel"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 280,
+        "parentId": null,
+        "description": "Fabricate and erect structural steel frame, connections, and floor decking for Block B."
+    },
+    {
+        "id": "t_t9",
+        "projectId": "p_toll",
+        "title": "Framing \u2014 Block A",
+        "type": "task",
+        "status": "Not Started",
+        "priority": "normal",
+        "startDate": "2026-04-27",
+        "dueDate": "2026-07-10",
+        "assigneeIds": [
+            "u_mturner",
+            "u_dkim"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 360,
+        "parentId": null,
+        "description": "Wood framing for all interior partitions and exterior walls, Block A residential units."
+    },
+    {
+        "id": "t_t10",
+        "projectId": "p_toll",
+        "title": "MEP Rough-In \u2014 Block A",
+        "type": "task",
+        "status": "Not Started",
+        "priority": "normal",
+        "startDate": "2026-06-22",
+        "dueDate": "2026-09-04",
+        "assigneeIds": [
+            "u_schen",
+            "u_rgarcia",
+            "u_dhall"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 480,
+        "parentId": null,
+        "description": "Rough-in mechanical, electrical, and plumbing for all units in Block A."
+    },
+    {
+        "id": "t_t11",
+        "projectId": "p_toll",
+        "title": "Roofing \u2014 Block A & B",
+        "type": "task",
+        "status": "Not Started",
+        "priority": "normal",
+        "startDate": "2026-08-03",
+        "dueDate": "2026-09-18",
+        "assigneeIds": [
+            "u_btorres"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 200,
+        "parentId": null,
+        "description": "Install roofing system including membrane, insulation, flashing, and drainage."
+    },
+    {
+        "id": "t_t12",
+        "projectId": "p_toll",
+        "title": "Safety & Compliance Audit \u2014 Q1",
+        "type": "deliverable",
+        "status": "Completed",
+        "priority": "high",
+        "startDate": "2026-01-19",
+        "dueDate": "2026-01-23",
+        "assigneeIds": [
+            "u_tbradley",
+            "u_janedoe"
+        ],
+        "percentDone": 100,
+        "estimatedHours": 24,
+        "parentId": null,
+        "description": "Quarterly site safety audit, incident review, toolbox talks documentation, and compliance report."
+    },
+    {
+        "id": "t_t13",
+        "projectId": "p_toll",
+        "title": "Safety & Compliance Audit \u2014 Q2",
+        "type": "deliverable",
+        "status": "Not Started",
+        "priority": "high",
+        "startDate": "2026-04-13",
+        "dueDate": "2026-04-17",
+        "assigneeIds": [
+            "u_tbradley",
+            "u_janedoe"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 24,
+        "parentId": null,
+        "description": "Q2 site safety audit, review near-misses, update MSDS sheets, and submit compliance report."
+    },
+    {
+        "id": "t_t14",
+        "projectId": "p_toll",
+        "title": "Project Handover \u2014 Phase 1 (Blocks A & B)",
+        "type": "milestone",
+        "status": "Not Started",
+        "priority": "high",
+        "startDate": "2026-10-26",
+        "dueDate": "2026-11-06",
+        "assigneeIds": [
+            "u_janedoe",
+            "u_npatel"
+        ],
+        "percentDone": 0,
+        "estimatedHours": 32,
+        "parentId": null,
+        "description": "Deficiency list completion, final inspections, and handover of Blocks A and B to client."
+    }
+];
   const SEED_TEMPLATES = [];
-  const SEED_TIME_ENTRIES = {};
-  const SEED_WEEKLY_ROWS = {};
-  const SEED_HOLIDAYS = [];
+  const SEED_TIME_ENTRIES = {"u_johndoe-2026-01-26-r_6187e579-2026-01-26":{"hours":6},"u_johndoe-2026-01-26-r_6187e579-2026-01-27":{"hours":7},"u_johndoe-2026-01-26-r_6187e579-2026-01-28":{"hours":7},"u_johndoe-2026-01-26-r_6187e579-2026-01-29":{"hours":6},"u_johndoe-2026-01-26-r_6187e579-2026-01-30":{"hours":6},"u_johndoe-2026-01-26-r_b54b3c35-2026-01-26":{"hours":6},"u_johndoe-2026-01-26-r_b54b3c35-2026-01-27":{"hours":7},"u_johndoe-2026-01-26-r_b54b3c35-2026-01-28":{"hours":6},"u_johndoe-2026-01-26-r_b54b3c35-2026-01-29":{"hours":6},"u_johndoe-2026-01-26-r_b54b3c35-2026-01-30":{"hours":7},"u_johndoe-2026-01-26-r_11cbb1e5-2026-01-26":{"hours":6},"u_johndoe-2026-01-26-r_11cbb1e5-2026-01-27":{"hours":6},"u_johndoe-2026-01-26-r_11cbb1e5-2026-01-28":{"hours":7},"u_johndoe-2026-01-26-r_11cbb1e5-2026-01-29":{"hours":6},"u_johndoe-2026-01-26-r_11cbb1e5-2026-01-30":{"hours":6},"u_johndoe-2026-02-02-r_d815cfcf-2026-02-02":{"hours":6},"u_johndoe-2026-02-02-r_d815cfcf-2026-02-03":{"hours":6},"u_johndoe-2026-02-02-r_d815cfcf-2026-02-04":{"hours":7},"u_johndoe-2026-02-02-r_d815cfcf-2026-02-05":{"hours":6},"u_johndoe-2026-02-02-r_d815cfcf-2026-02-06":{"hours":6},"u_johndoe-2026-02-02-r_1af0b748-2026-02-02":{"hours":6},"u_johndoe-2026-02-02-r_1af0b748-2026-02-03":{"hours":7},"u_johndoe-2026-02-02-r_1af0b748-2026-02-04":{"hours":7},"u_johndoe-2026-02-02-r_1af0b748-2026-02-05":{"hours":7},"u_johndoe-2026-02-02-r_1af0b748-2026-02-06":{"hours":7},"u_johndoe-2026-02-02-r_ffdf295e-2026-02-02":{"hours":6},"u_johndoe-2026-02-02-r_ffdf295e-2026-02-03":{"hours":6},"u_johndoe-2026-02-02-r_ffdf295e-2026-02-04":{"hours":7},"u_johndoe-2026-02-02-r_ffdf295e-2026-02-05":{"hours":6},"u_johndoe-2026-02-02-r_ffdf295e-2026-02-06":{"hours":6},"u_johndoe-2026-02-09-r_2f3bb6a4-2026-02-09":{"hours":6},"u_johndoe-2026-02-09-r_2f3bb6a4-2026-02-10":{"hours":6},"u_johndoe-2026-02-09-r_2f3bb6a4-2026-02-11":{"hours":6},"u_johndoe-2026-02-09-r_2f3bb6a4-2026-02-12":{"hours":6},"u_johndoe-2026-02-09-r_2f3bb6a4-2026-02-13":{"hours":6},"u_johndoe-2026-02-09-r_f6f9085a-2026-02-09":{"hours":6},"u_johndoe-2026-02-09-r_f6f9085a-2026-02-10":{"hours":6},"u_johndoe-2026-02-09-r_f6f9085a-2026-02-11":{"hours":6},"u_johndoe-2026-02-09-r_f6f9085a-2026-02-12":{"hours":7},"u_johndoe-2026-02-09-r_f6f9085a-2026-02-13":{"hours":7},"u_johndoe-2026-02-09-r_30990706-2026-02-09":{"hours":6},"u_johndoe-2026-02-09-r_30990706-2026-02-10":{"hours":6},"u_johndoe-2026-02-09-r_30990706-2026-02-11":{"hours":7},"u_johndoe-2026-02-09-r_30990706-2026-02-13":{"hours":6},"u_johndoe-2026-02-16-r_755949c9-2026-02-16":{"hours":6},"u_johndoe-2026-02-16-r_755949c9-2026-02-17":{"hours":6},"u_johndoe-2026-02-16-r_755949c9-2026-02-18":{"hours":6},"u_johndoe-2026-02-16-r_755949c9-2026-02-19":{"hours":6},"u_johndoe-2026-02-16-r_755949c9-2026-02-20":{"hours":6},"u_johndoe-2026-02-16-r_471915c2-2026-02-16":{"hours":6},"u_johndoe-2026-02-16-r_471915c2-2026-02-17":{"hours":6},"u_johndoe-2026-02-16-r_471915c2-2026-02-18":{"hours":6},"u_johndoe-2026-02-16-r_471915c2-2026-02-19":{"hours":6},"u_johndoe-2026-02-16-r_471915c2-2026-02-20":{"hours":6},"u_johndoe-2026-02-16-r_54b07736-2026-02-16":{"hours":7},"u_johndoe-2026-02-16-r_54b07736-2026-02-17":{"hours":6},"u_johndoe-2026-02-16-r_54b07736-2026-02-18":{"hours":7},"u_johndoe-2026-02-16-r_54b07736-2026-02-19":{"hours":6},"u_johndoe-2026-02-16-r_54b07736-2026-02-20":{"hours":7},"u_johndoe-2026-02-23-r_10b19e7d-2026-02-23":{"hours":6},"u_johndoe-2026-02-23-r_10b19e7d-2026-02-24":{"hours":6},"u_johndoe-2026-02-23-r_10b19e7d-2026-02-25":{"hours":6},"u_johndoe-2026-02-23-r_10b19e7d-2026-02-26":{"hours":6},"u_johndoe-2026-02-23-r_10b19e7d-2026-02-27":{"hours":7},"u_johndoe-2026-02-23-r_af98ba92-2026-02-23":{"hours":6},"u_johndoe-2026-02-23-r_af98ba92-2026-02-24":{"hours":7},"u_johndoe-2026-02-23-r_af98ba92-2026-02-25":{"hours":6},"u_johndoe-2026-02-23-r_af98ba92-2026-02-26":{"hours":6},"u_johndoe-2026-02-23-r_af98ba92-2026-02-27":{"hours":7},"u_johndoe-2026-02-23-r_7b5727fa-2026-02-23":{"hours":6},"u_johndoe-2026-02-23-r_7b5727fa-2026-02-24":{"hours":7},"u_johndoe-2026-02-23-r_7b5727fa-2026-02-25":{"hours":7},"u_johndoe-2026-02-23-r_7b5727fa-2026-02-26":{"hours":7},"u_johndoe-2026-02-23-r_7b5727fa-2026-02-27":{"hours":6},"u_janedoe-2026-01-26-r_dae5bd3d-2026-01-26":{"hours":6},"u_janedoe-2026-01-26-r_dae5bd3d-2026-01-27":{"hours":6},"u_janedoe-2026-01-26-r_dae5bd3d-2026-01-28":{"hours":7},"u_janedoe-2026-01-26-r_dae5bd3d-2026-01-29":{"hours":6},"u_janedoe-2026-01-26-r_dae5bd3d-2026-01-30":{"hours":6},"u_janedoe-2026-01-26-r_4aa91f36-2026-01-26":{"hours":7},"u_janedoe-2026-01-26-r_4aa91f36-2026-01-27":{"hours":7},"u_janedoe-2026-01-26-r_4aa91f36-2026-01-28":{"hours":7},"u_janedoe-2026-01-26-r_4aa91f36-2026-01-29":{"hours":6},"u_janedoe-2026-01-26-r_4aa91f36-2026-01-30":{"hours":6},"u_janedoe-2026-01-26-r_7d8eb63f-2026-01-26":{"hours":6},"u_janedoe-2026-01-26-r_7d8eb63f-2026-01-28":{"hours":6},"u_janedoe-2026-01-26-r_7d8eb63f-2026-01-29":{"hours":6},"u_janedoe-2026-01-26-r_7d8eb63f-2026-01-30":{"hours":7},"u_janedoe-2026-02-02-r_24b8e5f6-2026-02-02":{"hours":6},"u_janedoe-2026-02-02-r_24b8e5f6-2026-02-03":{"hours":6},"u_janedoe-2026-02-02-r_24b8e5f6-2026-02-04":{"hours":6},"u_janedoe-2026-02-02-r_24b8e5f6-2026-02-05":{"hours":6},"u_janedoe-2026-02-02-r_24b8e5f6-2026-02-06":{"hours":6},"u_janedoe-2026-02-02-r_98751091-2026-02-02":{"hours":6},"u_janedoe-2026-02-02-r_98751091-2026-02-03":{"hours":6},"u_janedoe-2026-02-02-r_98751091-2026-02-04":{"hours":6},"u_janedoe-2026-02-02-r_98751091-2026-02-05":{"hours":7},"u_janedoe-2026-02-02-r_98751091-2026-02-06":{"hours":6},"u_janedoe-2026-02-02-r_aa6344bb-2026-02-02":{"hours":7},"u_janedoe-2026-02-02-r_aa6344bb-2026-02-03":{"hours":6},"u_janedoe-2026-02-02-r_aa6344bb-2026-02-04":{"hours":7},"u_janedoe-2026-02-02-r_aa6344bb-2026-02-05":{"hours":7},"u_janedoe-2026-02-02-r_aa6344bb-2026-02-06":{"hours":6},"u_janedoe-2026-02-09-r_3b91287d-2026-02-09":{"hours":6},"u_janedoe-2026-02-09-r_3b91287d-2026-02-10":{"hours":6},"u_janedoe-2026-02-09-r_3b91287d-2026-02-11":{"hours":6},"u_janedoe-2026-02-09-r_3b91287d-2026-02-13":{"hours":6},"u_janedoe-2026-02-09-r_18289a2f-2026-02-09":{"hours":6},"u_janedoe-2026-02-09-r_18289a2f-2026-02-10":{"hours":6},"u_janedoe-2026-02-09-r_18289a2f-2026-02-11":{"hours":6},"u_janedoe-2026-02-09-r_18289a2f-2026-02-12":{"hours":6},"u_janedoe-2026-02-09-r_18289a2f-2026-02-13":{"hours":7},"u_janedoe-2026-02-09-r_db1b4d46-2026-02-09":{"hours":7},"u_janedoe-2026-02-09-r_db1b4d46-2026-02-10":{"hours":6},"u_janedoe-2026-02-09-r_db1b4d46-2026-02-11":{"hours":6},"u_janedoe-2026-02-09-r_db1b4d46-2026-02-12":{"hours":7},"u_janedoe-2026-02-09-r_db1b4d46-2026-02-13":{"hours":6},"u_janedoe-2026-02-16-r_f12775ef-2026-02-16":{"hours":6},"u_janedoe-2026-02-16-r_f12775ef-2026-02-17":{"hours":6},"u_janedoe-2026-02-16-r_f12775ef-2026-02-18":{"hours":6},"u_janedoe-2026-02-16-r_f12775ef-2026-02-19":{"hours":7},"u_janedoe-2026-02-16-r_f12775ef-2026-02-20":{"hours":6},"u_janedoe-2026-02-16-r_7d13e0e0-2026-02-16":{"hours":6},"u_janedoe-2026-02-16-r_7d13e0e0-2026-02-17":{"hours":7},"u_janedoe-2026-02-16-r_7d13e0e0-2026-02-18":{"hours":6},"u_janedoe-2026-02-16-r_7d13e0e0-2026-02-19":{"hours":6},"u_janedoe-2026-02-16-r_7d13e0e0-2026-02-20":{"hours":7},"u_janedoe-2026-02-16-r_e07ac5c5-2026-02-16":{"hours":7},"u_janedoe-2026-02-16-r_e07ac5c5-2026-02-17":{"hours":6},"u_janedoe-2026-02-16-r_e07ac5c5-2026-02-18":{"hours":7},"u_janedoe-2026-02-16-r_e07ac5c5-2026-02-20":{"hours":7},"u_janedoe-2026-02-23-r_fd654a38-2026-02-23":{"hours":7},"u_janedoe-2026-02-23-r_fd654a38-2026-02-25":{"hours":6},"u_janedoe-2026-02-23-r_fd654a38-2026-02-26":{"hours":6},"u_janedoe-2026-02-23-r_fd654a38-2026-02-27":{"hours":6},"u_janedoe-2026-02-23-r_0ce04235-2026-02-23":{"hours":7},"u_janedoe-2026-02-23-r_0ce04235-2026-02-24":{"hours":6},"u_janedoe-2026-02-23-r_0ce04235-2026-02-25":{"hours":6},"u_janedoe-2026-02-23-r_0ce04235-2026-02-26":{"hours":6},"u_janedoe-2026-02-23-r_0ce04235-2026-02-27":{"hours":6},"u_janedoe-2026-02-23-r_7076e13b-2026-02-23":{"hours":6},"u_janedoe-2026-02-23-r_7076e13b-2026-02-24":{"hours":7},"u_janedoe-2026-02-23-r_7076e13b-2026-02-25":{"hours":6},"u_janedoe-2026-02-23-r_7076e13b-2026-02-26":{"hours":7},"u_janedoe-2026-02-23-r_7076e13b-2026-02-27":{"hours":7},"u_dkim-2026-01-26-r_1d363274-2026-01-26":{"hours":6},"u_dkim-2026-01-26-r_1d363274-2026-01-27":{"hours":7},"u_dkim-2026-01-26-r_1d363274-2026-01-28":{"hours":6},"u_dkim-2026-01-26-r_1d363274-2026-01-29":{"hours":6},"u_dkim-2026-01-26-r_1d363274-2026-01-30":{"hours":7},"u_dkim-2026-01-26-r_8c4282bf-2026-01-26":{"hours":6},"u_dkim-2026-01-26-r_8c4282bf-2026-01-27":{"hours":6},"u_dkim-2026-01-26-r_8c4282bf-2026-01-28":{"hours":7},"u_dkim-2026-01-26-r_8c4282bf-2026-01-29":{"hours":7},"u_dkim-2026-01-26-r_8c4282bf-2026-01-30":{"hours":6},"u_dkim-2026-02-02-r_8ce73aa5-2026-02-02":{"hours":7},"u_dkim-2026-02-02-r_8ce73aa5-2026-02-03":{"hours":7},"u_dkim-2026-02-02-r_8ce73aa5-2026-02-04":{"hours":6},"u_dkim-2026-02-02-r_8ce73aa5-2026-02-05":{"hours":6},"u_dkim-2026-02-02-r_8ce73aa5-2026-02-06":{"hours":6},"u_dkim-2026-02-02-r_6101eae7-2026-02-02":{"hours":7},"u_dkim-2026-02-02-r_6101eae7-2026-02-03":{"hours":6},"u_dkim-2026-02-02-r_6101eae7-2026-02-04":{"hours":6},"u_dkim-2026-02-02-r_6101eae7-2026-02-05":{"hours":6},"u_dkim-2026-02-02-r_6101eae7-2026-02-06":{"hours":6},"u_dkim-2026-02-09-r_7b8cd3d7-2026-02-09":{"hours":7},"u_dkim-2026-02-09-r_7b8cd3d7-2026-02-10":{"hours":6},"u_dkim-2026-02-09-r_7b8cd3d7-2026-02-11":{"hours":6},"u_dkim-2026-02-09-r_7b8cd3d7-2026-02-12":{"hours":7},"u_dkim-2026-02-09-r_7b8cd3d7-2026-02-13":{"hours":6},"u_dkim-2026-02-09-r_d596b01f-2026-02-09":{"hours":7},"u_dkim-2026-02-09-r_d596b01f-2026-02-10":{"hours":6},"u_dkim-2026-02-09-r_d596b01f-2026-02-12":{"hours":6},"u_dkim-2026-02-09-r_d596b01f-2026-02-13":{"hours":6},"u_dkim-2026-02-16-r_e74c8750-2026-02-16":{"hours":6},"u_dkim-2026-02-16-r_e74c8750-2026-02-17":{"hours":6},"u_dkim-2026-02-16-r_e74c8750-2026-02-18":{"hours":6},"u_dkim-2026-02-16-r_e74c8750-2026-02-19":{"hours":6},"u_dkim-2026-02-16-r_e74c8750-2026-02-20":{"hours":6},"u_dkim-2026-02-16-r_53b2e5bb-2026-02-16":{"hours":7},"u_dkim-2026-02-16-r_53b2e5bb-2026-02-17":{"hours":6},"u_dkim-2026-02-16-r_53b2e5bb-2026-02-18":{"hours":7},"u_dkim-2026-02-16-r_53b2e5bb-2026-02-19":{"hours":6},"u_dkim-2026-02-16-r_53b2e5bb-2026-02-20":{"hours":7},"u_dkim-2026-02-23-r_f589145e-2026-02-23":{"hours":7},"u_dkim-2026-02-23-r_f589145e-2026-02-25":{"hours":7},"u_dkim-2026-02-23-r_f589145e-2026-02-26":{"hours":6},"u_dkim-2026-02-23-r_f589145e-2026-02-27":{"hours":6},"u_dkim-2026-02-23-r_ca402c63-2026-02-23":{"hours":6},"u_dkim-2026-02-23-r_ca402c63-2026-02-24":{"hours":7},"u_dkim-2026-02-23-r_ca402c63-2026-02-25":{"hours":7},"u_dkim-2026-02-23-r_ca402c63-2026-02-26":{"hours":6},"u_dkim-2026-02-23-r_ca402c63-2026-02-27":{"hours":6},"u_ewright-2026-01-26-r_15912b98-2026-01-26":{"hours":6},"u_ewright-2026-01-26-r_15912b98-2026-01-27":{"hours":6},"u_ewright-2026-01-26-r_15912b98-2026-01-28":{"hours":7},"u_ewright-2026-01-26-r_15912b98-2026-01-29":{"hours":6},"u_ewright-2026-01-26-r_15912b98-2026-01-30":{"hours":6},"u_ewright-2026-01-26-r_17d1b6cd-2026-01-26":{"hours":6},"u_ewright-2026-01-26-r_17d1b6cd-2026-01-29":{"hours":7},"u_ewright-2026-01-26-r_17d1b6cd-2026-01-30":{"hours":6},"u_ewright-2026-02-02-r_e7f722b4-2026-02-02":{"hours":6},"u_ewright-2026-02-02-r_e7f722b4-2026-02-03":{"hours":6},"u_ewright-2026-02-02-r_e7f722b4-2026-02-04":{"hours":6},"u_ewright-2026-02-02-r_e7f722b4-2026-02-05":{"hours":6},"u_ewright-2026-02-02-r_e7f722b4-2026-02-06":{"hours":6},"u_ewright-2026-02-02-r_c5f445ca-2026-02-02":{"hours":7},"u_ewright-2026-02-02-r_c5f445ca-2026-02-03":{"hours":6},"u_ewright-2026-02-02-r_c5f445ca-2026-02-04":{"hours":6},"u_ewright-2026-02-02-r_c5f445ca-2026-02-05":{"hours":6},"u_ewright-2026-02-02-r_c5f445ca-2026-02-06":{"hours":6},"u_ewright-2026-02-09-r_d61c3a95-2026-02-09":{"hours":7},"u_ewright-2026-02-09-r_d61c3a95-2026-02-10":{"hours":6},"u_ewright-2026-02-09-r_d61c3a95-2026-02-11":{"hours":6},"u_ewright-2026-02-09-r_d61c3a95-2026-02-12":{"hours":7},"u_ewright-2026-02-09-r_d61c3a95-2026-02-13":{"hours":6},"u_ewright-2026-02-09-r_6570e0fd-2026-02-09":{"hours":7},"u_ewright-2026-02-09-r_6570e0fd-2026-02-10":{"hours":6},"u_ewright-2026-02-09-r_6570e0fd-2026-02-11":{"hours":6},"u_ewright-2026-02-09-r_6570e0fd-2026-02-12":{"hours":6},"u_ewright-2026-02-09-r_6570e0fd-2026-02-13":{"hours":6},"u_ewright-2026-02-16-r_9e36a02c-2026-02-16":{"hours":6},"u_ewright-2026-02-16-r_9e36a02c-2026-02-17":{"hours":7},"u_ewright-2026-02-16-r_9e36a02c-2026-02-18":{"hours":6},"u_ewright-2026-02-16-r_9e36a02c-2026-02-19":{"hours":6},"u_ewright-2026-02-16-r_9e36a02c-2026-02-20":{"hours":6},"u_ewright-2026-02-16-r_6df9caaf-2026-02-16":{"hours":6},"u_ewright-2026-02-16-r_6df9caaf-2026-02-17":{"hours":6},"u_ewright-2026-02-16-r_6df9caaf-2026-02-20":{"hours":6},"u_ewright-2026-02-23-r_1310abf1-2026-02-23":{"hours":6},"u_ewright-2026-02-23-r_1310abf1-2026-02-24":{"hours":6},"u_ewright-2026-02-23-r_1310abf1-2026-02-25":{"hours":6},"u_ewright-2026-02-23-r_1310abf1-2026-02-26":{"hours":6},"u_ewright-2026-02-23-r_1310abf1-2026-02-27":{"hours":6},"u_ewright-2026-02-23-r_88d1b3c0-2026-02-23":{"hours":6},"u_ewright-2026-02-23-r_88d1b3c0-2026-02-24":{"hours":6},"u_ewright-2026-02-23-r_88d1b3c0-2026-02-25":{"hours":7},"u_ewright-2026-02-23-r_88d1b3c0-2026-02-26":{"hours":6},"u_ewright-2026-02-23-r_88d1b3c0-2026-02-27":{"hours":6},"u_mturner-2026-01-26-r_846599f0-2026-01-26":{"hours":8},"u_mturner-2026-01-26-r_846599f0-2026-01-27":{"hours":9},"u_mturner-2026-01-26-r_846599f0-2026-01-28":{"hours":7},"u_mturner-2026-01-26-r_846599f0-2026-01-29":{"hours":10},"u_mturner-2026-01-26-r_846599f0-2026-01-30":{"hours":7},"u_mturner-2026-02-02-r_10943f4e-2026-02-02":{"hours":7},"u_mturner-2026-02-02-r_10943f4e-2026-02-03":{"hours":8},"u_mturner-2026-02-02-r_10943f4e-2026-02-04":{"hours":7},"u_mturner-2026-02-02-r_10943f4e-2026-02-06":{"hours":6},"u_mturner-2026-02-09-r_fe50c9f4-2026-02-09":{"hours":7},"u_mturner-2026-02-09-r_fe50c9f4-2026-02-10":{"hours":10},"u_mturner-2026-02-09-r_fe50c9f4-2026-02-11":{"hours":8},"u_mturner-2026-02-09-r_fe50c9f4-2026-02-12":{"hours":9},"u_mturner-2026-02-09-r_fe50c9f4-2026-02-13":{"hours":6},"u_mturner-2026-02-16-r_f8a8a22d-2026-02-16":{"hours":7},"u_mturner-2026-02-16-r_f8a8a22d-2026-02-17":{"hours":9},"u_mturner-2026-02-16-r_f8a8a22d-2026-02-18":{"hours":7},"u_mturner-2026-02-16-r_f8a8a22d-2026-02-19":{"hours":9},"u_mturner-2026-02-16-r_f8a8a22d-2026-02-20":{"hours":8},"u_mturner-2026-02-23-r_52fddda5-2026-02-23":{"hours":7},"u_mturner-2026-02-23-r_52fddda5-2026-02-24":{"hours":9},"u_mturner-2026-02-23-r_52fddda5-2026-02-25":{"hours":7},"u_mturner-2026-02-23-r_52fddda5-2026-02-26":{"hours":9},"u_mturner-2026-02-23-r_52fddda5-2026-02-27":{"hours":7},"u_schen-2026-01-26-r_6caf493f-2026-01-26":{"hours":9},"u_schen-2026-01-26-r_6caf493f-2026-01-27":{"hours":8},"u_schen-2026-01-26-r_6caf493f-2026-01-28":{"hours":7},"u_schen-2026-01-26-r_6caf493f-2026-01-29":{"hours":10},"u_schen-2026-01-26-r_6caf493f-2026-01-30":{"hours":7},"u_schen-2026-02-02-r_f71c5b58-2026-02-02":{"hours":7},"u_schen-2026-02-02-r_f71c5b58-2026-02-03":{"hours":9},"u_schen-2026-02-02-r_f71c5b58-2026-02-04":{"hours":8},"u_schen-2026-02-02-r_f71c5b58-2026-02-05":{"hours":8},"u_schen-2026-02-02-r_f71c5b58-2026-02-06":{"hours":7},"u_schen-2026-02-09-r_3da13d10-2026-02-09":{"hours":9},"u_schen-2026-02-09-r_3da13d10-2026-02-11":{"hours":7},"u_schen-2026-02-09-r_3da13d10-2026-02-12":{"hours":8},"u_schen-2026-02-09-r_3da13d10-2026-02-13":{"hours":8},"u_schen-2026-02-16-r_9da62141-2026-02-16":{"hours":8},"u_schen-2026-02-16-r_9da62141-2026-02-17":{"hours":9},"u_schen-2026-02-16-r_9da62141-2026-02-18":{"hours":7},"u_schen-2026-02-16-r_9da62141-2026-02-19":{"hours":8},"u_schen-2026-02-16-r_9da62141-2026-02-20":{"hours":6},"u_schen-2026-02-23-r_48cc1715-2026-02-23":{"hours":8},"u_schen-2026-02-23-r_48cc1715-2026-02-24":{"hours":8},"u_schen-2026-02-23-r_48cc1715-2026-02-25":{"hours":7},"u_schen-2026-02-23-r_48cc1715-2026-02-26":{"hours":9},"u_schen-2026-02-23-r_48cc1715-2026-02-27":{"hours":8},"u_rgarcia-2026-01-26-r_91dec892-2026-01-26":{"hours":6},"u_rgarcia-2026-01-26-r_91dec892-2026-01-27":{"hours":6},"u_rgarcia-2026-01-26-r_91dec892-2026-01-28":{"hours":6},"u_rgarcia-2026-01-26-r_91dec892-2026-01-29":{"hours":6},"u_rgarcia-2026-01-26-r_91dec892-2026-01-30":{"hours":6},"u_rgarcia-2026-01-26-r_ff035a4b-2026-01-26":{"hours":6},"u_rgarcia-2026-01-26-r_ff035a4b-2026-01-27":{"hours":6},"u_rgarcia-2026-01-26-r_ff035a4b-2026-01-28":{"hours":6},"u_rgarcia-2026-01-26-r_ff035a4b-2026-01-30":{"hours":6},"u_rgarcia-2026-02-02-r_4d19040a-2026-02-02":{"hours":6},"u_rgarcia-2026-02-02-r_4d19040a-2026-02-03":{"hours":6},"u_rgarcia-2026-02-02-r_4d19040a-2026-02-04":{"hours":6},"u_rgarcia-2026-02-02-r_4d19040a-2026-02-05":{"hours":6},"u_rgarcia-2026-02-02-r_4d19040a-2026-02-06":{"hours":6},"u_rgarcia-2026-02-02-r_d358f1d6-2026-02-02":{"hours":6},"u_rgarcia-2026-02-02-r_d358f1d6-2026-02-03":{"hours":6},"u_rgarcia-2026-02-02-r_d358f1d6-2026-02-04":{"hours":6},"u_rgarcia-2026-02-02-r_d358f1d6-2026-02-05":{"hours":6},"u_rgarcia-2026-02-02-r_d358f1d6-2026-02-06":{"hours":6},"u_rgarcia-2026-02-09-r_28e657f1-2026-02-09":{"hours":6},"u_rgarcia-2026-02-09-r_28e657f1-2026-02-10":{"hours":6},"u_rgarcia-2026-02-09-r_28e657f1-2026-02-11":{"hours":6},"u_rgarcia-2026-02-09-r_28e657f1-2026-02-12":{"hours":7},"u_rgarcia-2026-02-09-r_28e657f1-2026-02-13":{"hours":6},"u_rgarcia-2026-02-09-r_ff57b974-2026-02-09":{"hours":6},"u_rgarcia-2026-02-09-r_ff57b974-2026-02-10":{"hours":7},"u_rgarcia-2026-02-09-r_ff57b974-2026-02-11":{"hours":7},"u_rgarcia-2026-02-09-r_ff57b974-2026-02-12":{"hours":7},"u_rgarcia-2026-02-09-r_ff57b974-2026-02-13":{"hours":6},"u_rgarcia-2026-02-16-r_fda3b792-2026-02-16":{"hours":7},"u_rgarcia-2026-02-16-r_fda3b792-2026-02-17":{"hours":7},"u_rgarcia-2026-02-16-r_fda3b792-2026-02-19":{"hours":6},"u_rgarcia-2026-02-16-r_fda3b792-2026-02-20":{"hours":6},"u_rgarcia-2026-02-16-r_17c2051e-2026-02-16":{"hours":6},"u_rgarcia-2026-02-16-r_17c2051e-2026-02-17":{"hours":6},"u_rgarcia-2026-02-16-r_17c2051e-2026-02-18":{"hours":6},"u_rgarcia-2026-02-16-r_17c2051e-2026-02-19":{"hours":6},"u_rgarcia-2026-02-16-r_17c2051e-2026-02-20":{"hours":6},"u_rgarcia-2026-02-23-r_55781c80-2026-02-23":{"hours":6},"u_rgarcia-2026-02-23-r_55781c80-2026-02-24":{"hours":7},"u_rgarcia-2026-02-23-r_55781c80-2026-02-25":{"hours":7},"u_rgarcia-2026-02-23-r_55781c80-2026-02-26":{"hours":6},"u_rgarcia-2026-02-23-r_55781c80-2026-02-27":{"hours":6},"u_rgarcia-2026-02-23-r_3e0f331e-2026-02-23":{"hours":6},"u_rgarcia-2026-02-23-r_3e0f331e-2026-02-24":{"hours":6},"u_rgarcia-2026-02-23-r_3e0f331e-2026-02-25":{"hours":7},"u_rgarcia-2026-02-23-r_3e0f331e-2026-02-26":{"hours":6},"u_rgarcia-2026-02-23-r_3e0f331e-2026-02-27":{"hours":6},"u_tbradley-2026-01-26-r_5b54d0fd-2026-01-26":{"hours":6},"u_tbradley-2026-01-26-r_5b54d0fd-2026-01-27":{"hours":7},"u_tbradley-2026-01-26-r_5b54d0fd-2026-01-28":{"hours":7},"u_tbradley-2026-01-26-r_5b54d0fd-2026-01-29":{"hours":6},"u_tbradley-2026-01-26-r_5b54d0fd-2026-01-30":{"hours":6},"u_tbradley-2026-01-26-r_1efcfb71-2026-01-26":{"hours":6},"u_tbradley-2026-01-26-r_1efcfb71-2026-01-27":{"hours":6},"u_tbradley-2026-01-26-r_1efcfb71-2026-01-28":{"hours":7},"u_tbradley-2026-01-26-r_1efcfb71-2026-01-29":{"hours":7},"u_tbradley-2026-01-26-r_1efcfb71-2026-01-30":{"hours":6},"u_tbradley-2026-02-02-r_0a6ce8c2-2026-02-02":{"hours":6},"u_tbradley-2026-02-02-r_0a6ce8c2-2026-02-03":{"hours":6},"u_tbradley-2026-02-02-r_0a6ce8c2-2026-02-04":{"hours":6},"u_tbradley-2026-02-02-r_0a6ce8c2-2026-02-05":{"hours":7},"u_tbradley-2026-02-02-r_0a6ce8c2-2026-02-06":{"hours":7},"u_tbradley-2026-02-02-r_7f26091b-2026-02-02":{"hours":7},"u_tbradley-2026-02-02-r_7f26091b-2026-02-03":{"hours":7},"u_tbradley-2026-02-02-r_7f26091b-2026-02-04":{"hours":6},"u_tbradley-2026-02-02-r_7f26091b-2026-02-05":{"hours":6},"u_tbradley-2026-02-02-r_7f26091b-2026-02-06":{"hours":7},"u_tbradley-2026-02-09-r_a33228dc-2026-02-09":{"hours":6},"u_tbradley-2026-02-09-r_a33228dc-2026-02-10":{"hours":7},"u_tbradley-2026-02-09-r_a33228dc-2026-02-11":{"hours":7},"u_tbradley-2026-02-09-r_a33228dc-2026-02-12":{"hours":7},"u_tbradley-2026-02-09-r_a33228dc-2026-02-13":{"hours":7},"u_tbradley-2026-02-09-r_fb12414c-2026-02-09":{"hours":7},"u_tbradley-2026-02-09-r_fb12414c-2026-02-10":{"hours":6},"u_tbradley-2026-02-09-r_fb12414c-2026-02-11":{"hours":6},"u_tbradley-2026-02-09-r_fb12414c-2026-02-12":{"hours":6},"u_tbradley-2026-02-09-r_fb12414c-2026-02-13":{"hours":6},"u_tbradley-2026-02-16-r_5ac9fb0a-2026-02-16":{"hours":6},"u_tbradley-2026-02-16-r_5ac9fb0a-2026-02-17":{"hours":7},"u_tbradley-2026-02-16-r_5ac9fb0a-2026-02-18":{"hours":6},"u_tbradley-2026-02-16-r_5ac9fb0a-2026-02-19":{"hours":7},"u_tbradley-2026-02-16-r_5ac9fb0a-2026-02-20":{"hours":6},"u_tbradley-2026-02-16-r_de39ed0d-2026-02-16":{"hours":6},"u_tbradley-2026-02-16-r_de39ed0d-2026-02-17":{"hours":6},"u_tbradley-2026-02-16-r_de39ed0d-2026-02-18":{"hours":7},"u_tbradley-2026-02-16-r_de39ed0d-2026-02-20":{"hours":7},"u_tbradley-2026-02-23-r_3fff81b6-2026-02-23":{"hours":7},"u_tbradley-2026-02-23-r_3fff81b6-2026-02-24":{"hours":6},"u_tbradley-2026-02-23-r_3fff81b6-2026-02-25":{"hours":6},"u_tbradley-2026-02-23-r_3fff81b6-2026-02-26":{"hours":6},"u_tbradley-2026-02-23-r_3fff81b6-2026-02-27":{"hours":7},"u_tbradley-2026-02-23-r_ae9154c0-2026-02-23":{"hours":7},"u_tbradley-2026-02-23-r_ae9154c0-2026-02-24":{"hours":7},"u_tbradley-2026-02-23-r_ae9154c0-2026-02-25":{"hours":6},"u_tbradley-2026-02-23-r_ae9154c0-2026-02-26":{"hours":6},"u_tbradley-2026-02-23-r_ae9154c0-2026-02-27":{"hours":7},"u_dhall-2026-01-26-r_ac098bdf-2026-01-26":{"hours":6},"u_dhall-2026-01-26-r_ac098bdf-2026-01-27":{"hours":7},"u_dhall-2026-01-26-r_ac098bdf-2026-01-28":{"hours":6},"u_dhall-2026-01-26-r_ac098bdf-2026-01-29":{"hours":6},"u_dhall-2026-01-26-r_ac098bdf-2026-01-30":{"hours":6},"u_dhall-2026-01-26-r_cf940849-2026-01-26":{"hours":7},"u_dhall-2026-01-26-r_cf940849-2026-01-27":{"hours":7},"u_dhall-2026-01-26-r_cf940849-2026-01-28":{"hours":6},"u_dhall-2026-01-26-r_cf940849-2026-01-29":{"hours":6},"u_dhall-2026-01-26-r_cf940849-2026-01-30":{"hours":7},"u_dhall-2026-02-02-r_17398369-2026-02-02":{"hours":7},"u_dhall-2026-02-02-r_17398369-2026-02-03":{"hours":8},"u_dhall-2026-02-02-r_17398369-2026-02-04":{"hours":6},"u_dhall-2026-02-02-r_17398369-2026-02-05":{"hours":7},"u_dhall-2026-02-02-r_17398369-2026-02-06":{"hours":6},"u_dhall-2026-02-02-r_a6bc9bbc-2026-02-02":{"hours":6},"u_dhall-2026-02-02-r_a6bc9bbc-2026-02-03":{"hours":6},"u_dhall-2026-02-02-r_a6bc9bbc-2026-02-04":{"hours":7},"u_dhall-2026-02-02-r_a6bc9bbc-2026-02-05":{"hours":7},"u_dhall-2026-02-02-r_a6bc9bbc-2026-02-06":{"hours":6},"u_dhall-2026-02-09-r_95a7c6c5-2026-02-09":{"hours":6},"u_dhall-2026-02-09-r_95a7c6c5-2026-02-10":{"hours":7},"u_dhall-2026-02-09-r_95a7c6c5-2026-02-11":{"hours":7},"u_dhall-2026-02-09-r_95a7c6c5-2026-02-12":{"hours":8},"u_dhall-2026-02-09-r_95a7c6c5-2026-02-13":{"hours":6},"u_dhall-2026-02-09-r_62d6e47d-2026-02-09":{"hours":7},"u_dhall-2026-02-09-r_62d6e47d-2026-02-10":{"hours":6},"u_dhall-2026-02-09-r_62d6e47d-2026-02-11":{"hours":6},"u_dhall-2026-02-09-r_62d6e47d-2026-02-12":{"hours":7},"u_dhall-2026-02-09-r_62d6e47d-2026-02-13":{"hours":7},"u_dhall-2026-02-16-r_c46452f6-2026-02-16":{"hours":6},"u_dhall-2026-02-16-r_c46452f6-2026-02-18":{"hours":6},"u_dhall-2026-02-16-r_c46452f6-2026-02-19":{"hours":7},"u_dhall-2026-02-16-r_c46452f6-2026-02-20":{"hours":6},"u_dhall-2026-02-16-r_c804f6fe-2026-02-16":{"hours":6},"u_dhall-2026-02-16-r_c804f6fe-2026-02-17":{"hours":7},"u_dhall-2026-02-16-r_c804f6fe-2026-02-18":{"hours":6},"u_dhall-2026-02-16-r_c804f6fe-2026-02-19":{"hours":6},"u_dhall-2026-02-16-r_c804f6fe-2026-02-20":{"hours":6},"u_dhall-2026-02-23-r_2a3fe966-2026-02-23":{"hours":6},"u_dhall-2026-02-23-r_2a3fe966-2026-02-24":{"hours":8},"u_dhall-2026-02-23-r_2a3fe966-2026-02-25":{"hours":6},"u_dhall-2026-02-23-r_2a3fe966-2026-02-26":{"hours":6},"u_dhall-2026-02-23-r_2a3fe966-2026-02-27":{"hours":7},"u_dhall-2026-02-23-r_8a89ee07-2026-02-23":{"hours":6},"u_dhall-2026-02-23-r_8a89ee07-2026-02-24":{"hours":7},"u_dhall-2026-02-23-r_8a89ee07-2026-02-25":{"hours":7},"u_dhall-2026-02-23-r_8a89ee07-2026-02-26":{"hours":7},"u_dhall-2026-02-23-r_8a89ee07-2026-02-27":{"hours":7},"u_cmendoza-2026-01-26-r_5410000a-2026-01-26":{"hours":6},"u_cmendoza-2026-01-26-r_5410000a-2026-01-27":{"hours":6},"u_cmendoza-2026-01-26-r_5410000a-2026-01-28":{"hours":7},"u_cmendoza-2026-01-26-r_5410000a-2026-01-29":{"hours":7},"u_cmendoza-2026-01-26-r_5410000a-2026-01-30":{"hours":7},"u_cmendoza-2026-01-26-r_fe4799f7-2026-01-26":{"hours":6},"u_cmendoza-2026-01-26-r_fe4799f7-2026-01-27":{"hours":6},"u_cmendoza-2026-01-26-r_fe4799f7-2026-01-28":{"hours":6},"u_cmendoza-2026-01-26-r_fe4799f7-2026-01-29":{"hours":6},"u_cmendoza-2026-01-26-r_fe4799f7-2026-01-30":{"hours":6},"u_cmendoza-2026-02-02-r_c0b441ba-2026-02-02":{"hours":6},"u_cmendoza-2026-02-02-r_c0b441ba-2026-02-03":{"hours":7},"u_cmendoza-2026-02-02-r_c0b441ba-2026-02-04":{"hours":6},"u_cmendoza-2026-02-02-r_c0b441ba-2026-02-05":{"hours":6},"u_cmendoza-2026-02-02-r_c0b441ba-2026-02-06":{"hours":7},"u_cmendoza-2026-02-02-r_cfd66381-2026-02-02":{"hours":7},"u_cmendoza-2026-02-02-r_cfd66381-2026-02-03":{"hours":6},"u_cmendoza-2026-02-02-r_cfd66381-2026-02-04":{"hours":7},"u_cmendoza-2026-02-02-r_cfd66381-2026-02-05":{"hours":7},"u_cmendoza-2026-02-02-r_cfd66381-2026-02-06":{"hours":6},"u_cmendoza-2026-02-09-r_b4c988fa-2026-02-09":{"hours":6},"u_cmendoza-2026-02-09-r_b4c988fa-2026-02-10":{"hours":7},"u_cmendoza-2026-02-09-r_b4c988fa-2026-02-11":{"hours":7},"u_cmendoza-2026-02-09-r_b4c988fa-2026-02-12":{"hours":6},"u_cmendoza-2026-02-09-r_b4c988fa-2026-02-13":{"hours":7},"u_cmendoza-2026-02-09-r_87f75e05-2026-02-09":{"hours":6},"u_cmendoza-2026-02-09-r_87f75e05-2026-02-10":{"hours":6},"u_cmendoza-2026-02-09-r_87f75e05-2026-02-11":{"hours":6},"u_cmendoza-2026-02-09-r_87f75e05-2026-02-12":{"hours":7},"u_cmendoza-2026-02-09-r_87f75e05-2026-02-13":{"hours":6},"u_cmendoza-2026-02-16-r_17dbe21d-2026-02-16":{"hours":6},"u_cmendoza-2026-02-16-r_17dbe21d-2026-02-19":{"hours":7},"u_cmendoza-2026-02-16-r_17dbe21d-2026-02-20":{"hours":6},"u_cmendoza-2026-02-16-r_c8c1111b-2026-02-16":{"hours":7},"u_cmendoza-2026-02-16-r_c8c1111b-2026-02-17":{"hours":7},"u_cmendoza-2026-02-16-r_c8c1111b-2026-02-18":{"hours":6},"u_cmendoza-2026-02-16-r_c8c1111b-2026-02-19":{"hours":7},"u_cmendoza-2026-02-16-r_c8c1111b-2026-02-20":{"hours":6},"u_cmendoza-2026-02-23-r_52e8a595-2026-02-23":{"hours":6},"u_cmendoza-2026-02-23-r_52e8a595-2026-02-24":{"hours":6},"u_cmendoza-2026-02-23-r_52e8a595-2026-02-25":{"hours":7},"u_cmendoza-2026-02-23-r_52e8a595-2026-02-26":{"hours":6},"u_cmendoza-2026-02-23-r_52e8a595-2026-02-27":{"hours":7},"u_cmendoza-2026-02-23-r_4a9b4844-2026-02-23":{"hours":7},"u_cmendoza-2026-02-23-r_4a9b4844-2026-02-24":{"hours":6},"u_cmendoza-2026-02-23-r_4a9b4844-2026-02-25":{"hours":7},"u_cmendoza-2026-02-23-r_4a9b4844-2026-02-26":{"hours":6},"u_cmendoza-2026-02-23-r_4a9b4844-2026-02-27":{"hours":7},"u_jsteel-2026-01-26-r_6bfb080f-2026-01-26":{"hours":6},"u_jsteel-2026-01-26-r_6bfb080f-2026-01-27":{"hours":6},"u_jsteel-2026-01-26-r_6bfb080f-2026-01-28":{"hours":6},"u_jsteel-2026-01-26-r_6bfb080f-2026-01-29":{"hours":6},"u_jsteel-2026-01-26-r_6bfb080f-2026-01-30":{"hours":7},"u_jsteel-2026-01-26-r_193cad67-2026-01-26":{"hours":7},"u_jsteel-2026-01-26-r_193cad67-2026-01-27":{"hours":7},"u_jsteel-2026-01-26-r_193cad67-2026-01-28":{"hours":7},"u_jsteel-2026-01-26-r_193cad67-2026-01-30":{"hours":7},"u_jsteel-2026-02-02-r_3a6cf4fc-2026-02-02":{"hours":7},"u_jsteel-2026-02-02-r_3a6cf4fc-2026-02-03":{"hours":7},"u_jsteel-2026-02-02-r_3a6cf4fc-2026-02-04":{"hours":6},"u_jsteel-2026-02-02-r_3a6cf4fc-2026-02-05":{"hours":6},"u_jsteel-2026-02-02-r_3a6cf4fc-2026-02-06":{"hours":7},"u_jsteel-2026-02-02-r_06e490db-2026-02-02":{"hours":6},"u_jsteel-2026-02-02-r_06e490db-2026-02-03":{"hours":6},"u_jsteel-2026-02-02-r_06e490db-2026-02-04":{"hours":7},"u_jsteel-2026-02-02-r_06e490db-2026-02-05":{"hours":6},"u_jsteel-2026-02-02-r_06e490db-2026-02-06":{"hours":6},"u_jsteel-2026-02-09-r_97df3280-2026-02-09":{"hours":7},"u_jsteel-2026-02-09-r_97df3280-2026-02-10":{"hours":6},"u_jsteel-2026-02-09-r_97df3280-2026-02-11":{"hours":6},"u_jsteel-2026-02-09-r_97df3280-2026-02-12":{"hours":6},"u_jsteel-2026-02-09-r_97df3280-2026-02-13":{"hours":7},"u_jsteel-2026-02-09-r_eb28f81f-2026-02-09":{"hours":6},"u_jsteel-2026-02-09-r_eb28f81f-2026-02-11":{"hours":7},"u_jsteel-2026-02-09-r_eb28f81f-2026-02-12":{"hours":7},"u_jsteel-2026-02-09-r_eb28f81f-2026-02-13":{"hours":7},"u_jsteel-2026-02-16-r_14d5214d-2026-02-16":{"hours":6},"u_jsteel-2026-02-16-r_14d5214d-2026-02-17":{"hours":6},"u_jsteel-2026-02-16-r_14d5214d-2026-02-18":{"hours":6},"u_jsteel-2026-02-16-r_14d5214d-2026-02-19":{"hours":6},"u_jsteel-2026-02-16-r_14d5214d-2026-02-20":{"hours":6},"u_jsteel-2026-02-16-r_6279dc2a-2026-02-16":{"hours":6},"u_jsteel-2026-02-16-r_6279dc2a-2026-02-17":{"hours":6},"u_jsteel-2026-02-16-r_6279dc2a-2026-02-18":{"hours":6},"u_jsteel-2026-02-16-r_6279dc2a-2026-02-19":{"hours":6},"u_jsteel-2026-02-16-r_6279dc2a-2026-02-20":{"hours":6},"u_jsteel-2026-02-23-r_125aecaa-2026-02-23":{"hours":6},"u_jsteel-2026-02-23-r_125aecaa-2026-02-24":{"hours":6},"u_jsteel-2026-02-23-r_125aecaa-2026-02-25":{"hours":6},"u_jsteel-2026-02-23-r_125aecaa-2026-02-26":{"hours":6},"u_jsteel-2026-02-23-r_125aecaa-2026-02-27":{"hours":7},"u_jsteel-2026-02-23-r_38564223-2026-02-23":{"hours":7},"u_jsteel-2026-02-23-r_38564223-2026-02-24":{"hours":6},"u_jsteel-2026-02-23-r_38564223-2026-02-25":{"hours":6},"u_jsteel-2026-02-23-r_38564223-2026-02-26":{"hours":6},"u_jsteel-2026-02-23-r_38564223-2026-02-27":{"hours":6},"u_lpark-2026-01-26-r_e9831695-2026-01-26":{"hours":6},"u_lpark-2026-01-26-r_e9831695-2026-01-27":{"hours":7},"u_lpark-2026-01-26-r_e9831695-2026-01-28":{"hours":7},"u_lpark-2026-01-26-r_e9831695-2026-01-29":{"hours":6},"u_lpark-2026-01-26-r_e9831695-2026-01-30":{"hours":6},"u_lpark-2026-01-26-r_d79ee1d7-2026-01-26":{"hours":6},"u_lpark-2026-01-26-r_d79ee1d7-2026-01-27":{"hours":6},"u_lpark-2026-01-26-r_d79ee1d7-2026-01-28":{"hours":7},"u_lpark-2026-01-26-r_d79ee1d7-2026-01-30":{"hours":6},"u_lpark-2026-02-02-r_7fcabc04-2026-02-02":{"hours":6},"u_lpark-2026-02-02-r_7fcabc04-2026-02-03":{"hours":6},"u_lpark-2026-02-02-r_7fcabc04-2026-02-04":{"hours":6},"u_lpark-2026-02-02-r_7fcabc04-2026-02-05":{"hours":6},"u_lpark-2026-02-02-r_7fcabc04-2026-02-06":{"hours":6},"u_lpark-2026-02-02-r_c4afa689-2026-02-02":{"hours":6},"u_lpark-2026-02-02-r_c4afa689-2026-02-03":{"hours":6},"u_lpark-2026-02-02-r_c4afa689-2026-02-04":{"hours":6},"u_lpark-2026-02-02-r_c4afa689-2026-02-05":{"hours":6},"u_lpark-2026-02-02-r_c4afa689-2026-02-06":{"hours":7},"u_lpark-2026-02-09-r_ad14a545-2026-02-09":{"hours":7},"u_lpark-2026-02-09-r_ad14a545-2026-02-11":{"hours":6},"u_lpark-2026-02-09-r_ad14a545-2026-02-12":{"hours":7},"u_lpark-2026-02-09-r_ad14a545-2026-02-13":{"hours":7},"u_lpark-2026-02-09-r_966b6b3a-2026-02-09":{"hours":6},"u_lpark-2026-02-09-r_966b6b3a-2026-02-10":{"hours":6},"u_lpark-2026-02-09-r_966b6b3a-2026-02-11":{"hours":6},"u_lpark-2026-02-09-r_966b6b3a-2026-02-12":{"hours":6},"u_lpark-2026-02-09-r_966b6b3a-2026-02-13":{"hours":6},"u_lpark-2026-02-16-r_9df4583f-2026-02-16":{"hours":6},"u_lpark-2026-02-16-r_9df4583f-2026-02-17":{"hours":6},"u_lpark-2026-02-16-r_9df4583f-2026-02-18":{"hours":7},"u_lpark-2026-02-16-r_9df4583f-2026-02-19":{"hours":7},"u_lpark-2026-02-16-r_9df4583f-2026-02-20":{"hours":6},"u_lpark-2026-02-16-r_61e5c890-2026-02-16":{"hours":6},"u_lpark-2026-02-16-r_61e5c890-2026-02-17":{"hours":6},"u_lpark-2026-02-16-r_61e5c890-2026-02-18":{"hours":6},"u_lpark-2026-02-16-r_61e5c890-2026-02-20":{"hours":7},"u_lpark-2026-02-23-r_d3ea419b-2026-02-23":{"hours":7},"u_lpark-2026-02-23-r_d3ea419b-2026-02-24":{"hours":7},"u_lpark-2026-02-23-r_d3ea419b-2026-02-25":{"hours":7},"u_lpark-2026-02-23-r_d3ea419b-2026-02-26":{"hours":8},"u_lpark-2026-02-23-r_d3ea419b-2026-02-27":{"hours":6},"u_lpark-2026-02-23-r_6021bd61-2026-02-23":{"hours":7},"u_lpark-2026-02-23-r_6021bd61-2026-02-24":{"hours":7},"u_lpark-2026-02-23-r_6021bd61-2026-02-25":{"hours":6},"u_lpark-2026-02-23-r_6021bd61-2026-02-26":{"hours":6},"u_lpark-2026-02-23-r_6021bd61-2026-02-27":{"hours":6},"u_npatel-2026-01-26-r_9b5d2ad8-2026-01-26":{"hours":7},"u_npatel-2026-01-26-r_9b5d2ad8-2026-01-27":{"hours":6},"u_npatel-2026-01-26-r_9b5d2ad8-2026-01-28":{"hours":6},"u_npatel-2026-01-26-r_9b5d2ad8-2026-01-29":{"hours":6},"u_npatel-2026-01-26-r_9b5d2ad8-2026-01-30":{"hours":6},"u_npatel-2026-01-26-r_f00acb25-2026-01-26":{"hours":6},"u_npatel-2026-01-26-r_f00acb25-2026-01-27":{"hours":6},"u_npatel-2026-01-26-r_f00acb25-2026-01-28":{"hours":6},"u_npatel-2026-01-26-r_f00acb25-2026-01-29":{"hours":6},"u_npatel-2026-01-26-r_f00acb25-2026-01-30":{"hours":6},"u_npatel-2026-02-02-r_d50454a6-2026-02-02":{"hours":7},"u_npatel-2026-02-02-r_d50454a6-2026-02-03":{"hours":6},"u_npatel-2026-02-02-r_d50454a6-2026-02-04":{"hours":7},"u_npatel-2026-02-02-r_d50454a6-2026-02-05":{"hours":6},"u_npatel-2026-02-02-r_d50454a6-2026-02-06":{"hours":7},"u_npatel-2026-02-02-r_fa4d9e0f-2026-02-02":{"hours":7},"u_npatel-2026-02-02-r_fa4d9e0f-2026-02-03":{"hours":6},"u_npatel-2026-02-02-r_fa4d9e0f-2026-02-04":{"hours":6},"u_npatel-2026-02-02-r_fa4d9e0f-2026-02-05":{"hours":6},"u_npatel-2026-02-02-r_fa4d9e0f-2026-02-06":{"hours":7},"u_npatel-2026-02-09-r_7dd167d0-2026-02-09":{"hours":6},"u_npatel-2026-02-09-r_7dd167d0-2026-02-10":{"hours":6},"u_npatel-2026-02-09-r_7dd167d0-2026-02-11":{"hours":6},"u_npatel-2026-02-09-r_7dd167d0-2026-02-12":{"hours":6},"u_npatel-2026-02-09-r_7dd167d0-2026-02-13":{"hours":6},"u_npatel-2026-02-09-r_5bc6410d-2026-02-09":{"hours":6},"u_npatel-2026-02-09-r_5bc6410d-2026-02-10":{"hours":7},"u_npatel-2026-02-09-r_5bc6410d-2026-02-11":{"hours":6},"u_npatel-2026-02-09-r_5bc6410d-2026-02-12":{"hours":7},"u_npatel-2026-02-09-r_5bc6410d-2026-02-13":{"hours":7},"u_npatel-2026-02-16-r_422a0082-2026-02-16":{"hours":6},"u_npatel-2026-02-16-r_422a0082-2026-02-17":{"hours":6},"u_npatel-2026-02-16-r_422a0082-2026-02-18":{"hours":7},"u_npatel-2026-02-16-r_422a0082-2026-02-19":{"hours":6},"u_npatel-2026-02-16-r_422a0082-2026-02-20":{"hours":7},"u_npatel-2026-02-16-r_3821cad9-2026-02-16":{"hours":7},"u_npatel-2026-02-16-r_3821cad9-2026-02-17":{"hours":6},"u_npatel-2026-02-16-r_3821cad9-2026-02-18":{"hours":6},"u_npatel-2026-02-16-r_3821cad9-2026-02-19":{"hours":6},"u_npatel-2026-02-16-r_3821cad9-2026-02-20":{"hours":6},"u_npatel-2026-02-23-r_a5ba96c6-2026-02-23":{"hours":7},"u_npatel-2026-02-23-r_a5ba96c6-2026-02-24":{"hours":7},"u_npatel-2026-02-23-r_a5ba96c6-2026-02-27":{"hours":6},"u_npatel-2026-02-23-r_9bf50934-2026-02-23":{"hours":7},"u_npatel-2026-02-23-r_9bf50934-2026-02-24":{"hours":6},"u_npatel-2026-02-23-r_9bf50934-2026-02-26":{"hours":7},"u_npatel-2026-02-23-r_9bf50934-2026-02-27":{"hours":6},"u_afoster-2026-01-26-r_beeab356-2026-01-26":{"hours":8},"u_afoster-2026-01-26-r_beeab356-2026-01-29":{"hours":8},"u_afoster-2026-01-26-r_beeab356-2026-01-30":{"hours":7},"u_afoster-2026-02-02-r_3d2a752a-2026-02-02":{"hours":7},"u_afoster-2026-02-02-r_3d2a752a-2026-02-03":{"hours":10},"u_afoster-2026-02-02-r_3d2a752a-2026-02-04":{"hours":8},"u_afoster-2026-02-02-r_3d2a752a-2026-02-05":{"hours":10},"u_afoster-2026-02-02-r_3d2a752a-2026-02-06":{"hours":8},"u_afoster-2026-02-09-r_57d58678-2026-02-09":{"hours":8},"u_afoster-2026-02-09-r_57d58678-2026-02-10":{"hours":8},"u_afoster-2026-02-09-r_57d58678-2026-02-11":{"hours":9},"u_afoster-2026-02-09-r_57d58678-2026-02-12":{"hours":8},"u_afoster-2026-02-09-r_57d58678-2026-02-13":{"hours":7},"u_afoster-2026-02-16-r_c8a79710-2026-02-16":{"hours":8},"u_afoster-2026-02-16-r_c8a79710-2026-02-17":{"hours":10},"u_afoster-2026-02-16-r_c8a79710-2026-02-18":{"hours":7},"u_afoster-2026-02-16-r_c8a79710-2026-02-19":{"hours":10},"u_afoster-2026-02-16-r_c8a79710-2026-02-20":{"hours":7},"u_afoster-2026-02-23-r_32a57cf7-2026-02-23":{"hours":9},"u_afoster-2026-02-23-r_32a57cf7-2026-02-24":{"hours":10},"u_afoster-2026-02-23-r_32a57cf7-2026-02-25":{"hours":7},"u_afoster-2026-02-23-r_32a57cf7-2026-02-26":{"hours":9},"u_afoster-2026-02-23-r_32a57cf7-2026-02-27":{"hours":6},"u_btorres-2026-01-26-r_ed609966-2026-01-26":{"hours":6},"u_btorres-2026-01-26-r_ed609966-2026-01-27":{"hours":6},"u_btorres-2026-01-26-r_ed609966-2026-01-28":{"hours":7},"u_btorres-2026-01-26-r_ed609966-2026-01-29":{"hours":6},"u_btorres-2026-01-26-r_ed609966-2026-01-30":{"hours":6},"u_btorres-2026-01-26-r_666138e7-2026-01-26":{"hours":6},"u_btorres-2026-01-26-r_666138e7-2026-01-27":{"hours":7},"u_btorres-2026-01-26-r_666138e7-2026-01-28":{"hours":7},"u_btorres-2026-01-26-r_666138e7-2026-01-30":{"hours":7},"u_btorres-2026-02-02-r_586f440a-2026-02-02":{"hours":7},"u_btorres-2026-02-02-r_586f440a-2026-02-03":{"hours":6},"u_btorres-2026-02-02-r_586f440a-2026-02-04":{"hours":6},"u_btorres-2026-02-02-r_586f440a-2026-02-05":{"hours":8},"u_btorres-2026-02-02-r_586f440a-2026-02-06":{"hours":6},"u_btorres-2026-02-02-r_b9f4fe29-2026-02-02":{"hours":6},"u_btorres-2026-02-02-r_b9f4fe29-2026-02-03":{"hours":7},"u_btorres-2026-02-02-r_b9f4fe29-2026-02-04":{"hours":6},"u_btorres-2026-02-02-r_b9f4fe29-2026-02-05":{"hours":7},"u_btorres-2026-02-02-r_b9f4fe29-2026-02-06":{"hours":6},"u_btorres-2026-02-09-r_ee7a890a-2026-02-09":{"hours":7},"u_btorres-2026-02-09-r_ee7a890a-2026-02-10":{"hours":6},"u_btorres-2026-02-09-r_ee7a890a-2026-02-11":{"hours":7},"u_btorres-2026-02-09-r_ee7a890a-2026-02-12":{"hours":8},"u_btorres-2026-02-09-r_ee7a890a-2026-02-13":{"hours":7},"u_btorres-2026-02-09-r_6a3fa4c6-2026-02-09":{"hours":7},"u_btorres-2026-02-09-r_6a3fa4c6-2026-02-10":{"hours":7},"u_btorres-2026-02-09-r_6a3fa4c6-2026-02-11":{"hours":6},"u_btorres-2026-02-09-r_6a3fa4c6-2026-02-12":{"hours":6},"u_btorres-2026-02-09-r_6a3fa4c6-2026-02-13":{"hours":6},"u_btorres-2026-02-16-r_24a638b8-2026-02-16":{"hours":7},"u_btorres-2026-02-16-r_24a638b8-2026-02-17":{"hours":6},"u_btorres-2026-02-16-r_24a638b8-2026-02-18":{"hours":7},"u_btorres-2026-02-16-r_24a638b8-2026-02-19":{"hours":7},"u_btorres-2026-02-16-r_24a638b8-2026-02-20":{"hours":7},"u_btorres-2026-02-16-r_62ddfea8-2026-02-16":{"hours":6},"u_btorres-2026-02-16-r_62ddfea8-2026-02-17":{"hours":6},"u_btorres-2026-02-16-r_62ddfea8-2026-02-18":{"hours":7},"u_btorres-2026-02-16-r_62ddfea8-2026-02-19":{"hours":6},"u_btorres-2026-02-16-r_62ddfea8-2026-02-20":{"hours":6},"u_btorres-2026-02-23-r_e085df6f-2026-02-23":{"hours":6},"u_btorres-2026-02-23-r_e085df6f-2026-02-24":{"hours":6},"u_btorres-2026-02-23-r_e085df6f-2026-02-25":{"hours":6},"u_btorres-2026-02-23-r_e085df6f-2026-02-26":{"hours":8},"u_btorres-2026-02-23-r_e085df6f-2026-02-27":{"hours":6},"u_btorres-2026-02-23-r_ccfbff62-2026-02-23":{"hours":6},"u_btorres-2026-02-23-r_ccfbff62-2026-02-25":{"hours":6},"u_btorres-2026-02-23-r_ccfbff62-2026-02-26":{"hours":6},"u_btorres-2026-02-23-r_ccfbff62-2026-02-27":{"hours":7}};
+  const SEED_WEEKLY_ROWS = {"u_johndoe-2026-01-26":[{"id":"r_6187e579","projectId":"p_acme","taskId":"t_a6"},{"id":"r_b54b3c35","projectId":"p_acme","taskId":"t_a7"},{"id":"r_11cbb1e5","projectId":"p_acme","taskId":"t_a8"}],"u_johndoe-2026-02-02":[{"id":"r_d815cfcf","projectId":"p_acme","taskId":"t_a6"},{"id":"r_1af0b748","projectId":"p_acme","taskId":"t_a7"},{"id":"r_ffdf295e","projectId":"p_acme","taskId":"t_a8"}],"u_johndoe-2026-02-09":[{"id":"r_2f3bb6a4","projectId":"p_acme","taskId":"t_a6"},{"id":"r_f6f9085a","projectId":"p_acme","taskId":"t_a7"},{"id":"r_30990706","projectId":"p_acme","taskId":"t_a8"}],"u_johndoe-2026-02-16":[{"id":"r_755949c9","projectId":"p_acme","taskId":"t_a6"},{"id":"r_471915c2","projectId":"p_acme","taskId":"t_a7"},{"id":"r_54b07736","projectId":"p_acme","taskId":"t_a8"}],"u_johndoe-2026-02-23":[{"id":"r_10b19e7d","projectId":"p_acme","taskId":"t_a6"},{"id":"r_af98ba92","projectId":"p_acme","taskId":"t_a7"},{"id":"r_7b5727fa","projectId":"p_acme","taskId":"t_a8"}],"u_janedoe-2026-01-26":[{"id":"r_dae5bd3d","projectId":"p_toll","taskId":"t_t4"},{"id":"r_4aa91f36","projectId":"p_toll","taskId":"t_t5"},{"id":"r_7d8eb63f","projectId":"p_toll","taskId":"t_t7"}],"u_janedoe-2026-02-02":[{"id":"r_24b8e5f6","projectId":"p_toll","taskId":"t_t4"},{"id":"r_98751091","projectId":"p_toll","taskId":"t_t5"},{"id":"r_aa6344bb","projectId":"p_toll","taskId":"t_t7"}],"u_janedoe-2026-02-09":[{"id":"r_3b91287d","projectId":"p_toll","taskId":"t_t4"},{"id":"r_18289a2f","projectId":"p_toll","taskId":"t_t5"},{"id":"r_db1b4d46","projectId":"p_toll","taskId":"t_t7"}],"u_janedoe-2026-02-16":[{"id":"r_f12775ef","projectId":"p_toll","taskId":"t_t4"},{"id":"r_7d13e0e0","projectId":"p_toll","taskId":"t_t5"},{"id":"r_e07ac5c5","projectId":"p_toll","taskId":"t_t7"}],"u_janedoe-2026-02-23":[{"id":"r_fd654a38","projectId":"p_toll","taskId":"t_t4"},{"id":"r_0ce04235","projectId":"p_toll","taskId":"t_t5"},{"id":"r_7076e13b","projectId":"p_toll","taskId":"t_t7"}],"u_dkim-2026-01-26":[{"id":"r_1d363274","projectId":"p_acme","taskId":"t_a6"},{"id":"r_8c4282bf","projectId":"p_acme","taskId":"t_a7"}],"u_dkim-2026-02-02":[{"id":"r_8ce73aa5","projectId":"p_acme","taskId":"t_a6"},{"id":"r_6101eae7","projectId":"p_acme","taskId":"t_a7"}],"u_dkim-2026-02-09":[{"id":"r_7b8cd3d7","projectId":"p_acme","taskId":"t_a6"},{"id":"r_d596b01f","projectId":"p_acme","taskId":"t_a7"}],"u_dkim-2026-02-16":[{"id":"r_e74c8750","projectId":"p_acme","taskId":"t_a6"},{"id":"r_53b2e5bb","projectId":"p_acme","taskId":"t_a7"}],"u_dkim-2026-02-23":[{"id":"r_f589145e","projectId":"p_acme","taskId":"t_a6"},{"id":"r_ca402c63","projectId":"p_acme","taskId":"t_a7"}],"u_ewright-2026-01-26":[{"id":"r_15912b98","projectId":"p_acme","taskId":"t_a9"},{"id":"r_17d1b6cd","projectId":"p_acme","taskId":"t_a6"}],"u_ewright-2026-02-02":[{"id":"r_e7f722b4","projectId":"p_acme","taskId":"t_a9"},{"id":"r_c5f445ca","projectId":"p_acme","taskId":"t_a6"}],"u_ewright-2026-02-09":[{"id":"r_d61c3a95","projectId":"p_acme","taskId":"t_a9"},{"id":"r_6570e0fd","projectId":"p_acme","taskId":"t_a6"}],"u_ewright-2026-02-16":[{"id":"r_9e36a02c","projectId":"p_acme","taskId":"t_a9"},{"id":"r_6df9caaf","projectId":"p_acme","taskId":"t_a6"}],"u_ewright-2026-02-23":[{"id":"r_1310abf1","projectId":"p_acme","taskId":"t_a9"},{"id":"r_88d1b3c0","projectId":"p_acme","taskId":"t_a6"}],"u_mturner-2026-01-26":[{"id":"r_846599f0","projectId":"p_acme","taskId":"t_a6"}],"u_mturner-2026-02-02":[{"id":"r_10943f4e","projectId":"p_acme","taskId":"t_a6"}],"u_mturner-2026-02-09":[{"id":"r_fe50c9f4","projectId":"p_acme","taskId":"t_a6"}],"u_mturner-2026-02-16":[{"id":"r_f8a8a22d","projectId":"p_acme","taskId":"t_a6"}],"u_mturner-2026-02-23":[{"id":"r_52fddda5","projectId":"p_acme","taskId":"t_a6"}],"u_schen-2026-01-26":[{"id":"r_6caf493f","projectId":"p_acme","taskId":"t_a7"}],"u_schen-2026-02-02":[{"id":"r_f71c5b58","projectId":"p_acme","taskId":"t_a7"}],"u_schen-2026-02-09":[{"id":"r_3da13d10","projectId":"p_acme","taskId":"t_a7"}],"u_schen-2026-02-16":[{"id":"r_9da62141","projectId":"p_acme","taskId":"t_a7"}],"u_schen-2026-02-23":[{"id":"r_48cc1715","projectId":"p_acme","taskId":"t_a7"}],"u_rgarcia-2026-01-26":[{"id":"r_91dec892","projectId":"p_acme","taskId":"t_a8"},{"id":"r_ff035a4b","projectId":"p_toll","taskId":"t_t4"}],"u_rgarcia-2026-02-02":[{"id":"r_4d19040a","projectId":"p_acme","taskId":"t_a8"},{"id":"r_d358f1d6","projectId":"p_toll","taskId":"t_t4"}],"u_rgarcia-2026-02-09":[{"id":"r_28e657f1","projectId":"p_acme","taskId":"t_a8"},{"id":"r_ff57b974","projectId":"p_toll","taskId":"t_t4"}],"u_rgarcia-2026-02-16":[{"id":"r_fda3b792","projectId":"p_acme","taskId":"t_a8"},{"id":"r_17c2051e","projectId":"p_toll","taskId":"t_t4"}],"u_rgarcia-2026-02-23":[{"id":"r_55781c80","projectId":"p_acme","taskId":"t_a8"},{"id":"r_3e0f331e","projectId":"p_toll","taskId":"t_t4"}],"u_tbradley-2026-01-26":[{"id":"r_5b54d0fd","projectId":"p_acme","taskId":"t_a6"},{"id":"r_1efcfb71","projectId":"p_toll","taskId":"t_t7"}],"u_tbradley-2026-02-02":[{"id":"r_0a6ce8c2","projectId":"p_acme","taskId":"t_a6"},{"id":"r_7f26091b","projectId":"p_toll","taskId":"t_t7"}],"u_tbradley-2026-02-09":[{"id":"r_a33228dc","projectId":"p_acme","taskId":"t_a6"},{"id":"r_fb12414c","projectId":"p_toll","taskId":"t_t7"}],"u_tbradley-2026-02-16":[{"id":"r_5ac9fb0a","projectId":"p_acme","taskId":"t_a6"},{"id":"r_de39ed0d","projectId":"p_toll","taskId":"t_t7"}],"u_tbradley-2026-02-23":[{"id":"r_3fff81b6","projectId":"p_acme","taskId":"t_a6"},{"id":"r_ae9154c0","projectId":"p_toll","taskId":"t_t7"}],"u_dhall-2026-01-26":[{"id":"r_ac098bdf","projectId":"p_acme","taskId":"t_a7"},{"id":"r_cf940849","projectId":"p_acme","taskId":"t_a6"}],"u_dhall-2026-02-02":[{"id":"r_17398369","projectId":"p_acme","taskId":"t_a7"},{"id":"r_a6bc9bbc","projectId":"p_acme","taskId":"t_a6"}],"u_dhall-2026-02-09":[{"id":"r_95a7c6c5","projectId":"p_acme","taskId":"t_a7"},{"id":"r_62d6e47d","projectId":"p_acme","taskId":"t_a6"}],"u_dhall-2026-02-16":[{"id":"r_c46452f6","projectId":"p_acme","taskId":"t_a7"},{"id":"r_c804f6fe","projectId":"p_acme","taskId":"t_a6"}],"u_dhall-2026-02-23":[{"id":"r_2a3fe966","projectId":"p_acme","taskId":"t_a7"},{"id":"r_8a89ee07","projectId":"p_acme","taskId":"t_a6"}],"u_cmendoza-2026-01-26":[{"id":"r_5410000a","projectId":"p_acme","taskId":"t_a9"},{"id":"r_fe4799f7","projectId":"p_toll","taskId":"t_t5"}],"u_cmendoza-2026-02-02":[{"id":"r_c0b441ba","projectId":"p_acme","taskId":"t_a9"},{"id":"r_cfd66381","projectId":"p_toll","taskId":"t_t5"}],"u_cmendoza-2026-02-09":[{"id":"r_b4c988fa","projectId":"p_acme","taskId":"t_a9"},{"id":"r_87f75e05","projectId":"p_toll","taskId":"t_t5"}],"u_cmendoza-2026-02-16":[{"id":"r_17dbe21d","projectId":"p_acme","taskId":"t_a9"},{"id":"r_c8c1111b","projectId":"p_toll","taskId":"t_t5"}],"u_cmendoza-2026-02-23":[{"id":"r_52e8a595","projectId":"p_acme","taskId":"t_a9"},{"id":"r_4a9b4844","projectId":"p_toll","taskId":"t_t5"}],"u_jsteel-2026-01-26":[{"id":"r_6bfb080f","projectId":"p_acme","taskId":"t_a6"},{"id":"r_193cad67","projectId":"p_toll","taskId":"t_t7"}],"u_jsteel-2026-02-02":[{"id":"r_3a6cf4fc","projectId":"p_acme","taskId":"t_a6"},{"id":"r_06e490db","projectId":"p_toll","taskId":"t_t7"}],"u_jsteel-2026-02-09":[{"id":"r_97df3280","projectId":"p_acme","taskId":"t_a6"},{"id":"r_eb28f81f","projectId":"p_toll","taskId":"t_t7"}],"u_jsteel-2026-02-16":[{"id":"r_14d5214d","projectId":"p_acme","taskId":"t_a6"},{"id":"r_6279dc2a","projectId":"p_toll","taskId":"t_t7"}],"u_jsteel-2026-02-23":[{"id":"r_125aecaa","projectId":"p_acme","taskId":"t_a6"},{"id":"r_38564223","projectId":"p_toll","taskId":"t_t7"}],"u_lpark-2026-01-26":[{"id":"r_e9831695","projectId":"p_toll","taskId":"t_t5"},{"id":"r_d79ee1d7","projectId":"p_toll","taskId":"t_t6"}],"u_lpark-2026-02-02":[{"id":"r_7fcabc04","projectId":"p_toll","taskId":"t_t5"},{"id":"r_c4afa689","projectId":"p_toll","taskId":"t_t6"}],"u_lpark-2026-02-09":[{"id":"r_ad14a545","projectId":"p_toll","taskId":"t_t5"},{"id":"r_966b6b3a","projectId":"p_toll","taskId":"t_t6"}],"u_lpark-2026-02-16":[{"id":"r_9df4583f","projectId":"p_toll","taskId":"t_t5"},{"id":"r_61e5c890","projectId":"p_toll","taskId":"t_t6"}],"u_lpark-2026-02-23":[{"id":"r_d3ea419b","projectId":"p_toll","taskId":"t_t5"},{"id":"r_6021bd61","projectId":"p_toll","taskId":"t_t6"}],"u_npatel-2026-01-26":[{"id":"r_9b5d2ad8","projectId":"p_acme","taskId":"t_a6"},{"id":"r_f00acb25","projectId":"p_toll","taskId":"t_t6"}],"u_npatel-2026-02-02":[{"id":"r_d50454a6","projectId":"p_acme","taskId":"t_a6"},{"id":"r_fa4d9e0f","projectId":"p_toll","taskId":"t_t6"}],"u_npatel-2026-02-09":[{"id":"r_7dd167d0","projectId":"p_acme","taskId":"t_a6"},{"id":"r_5bc6410d","projectId":"p_toll","taskId":"t_t6"}],"u_npatel-2026-02-16":[{"id":"r_422a0082","projectId":"p_acme","taskId":"t_a6"},{"id":"r_3821cad9","projectId":"p_toll","taskId":"t_t6"}],"u_npatel-2026-02-23":[{"id":"r_a5ba96c6","projectId":"p_acme","taskId":"t_a6"},{"id":"r_9bf50934","projectId":"p_toll","taskId":"t_t6"}],"u_afoster-2026-01-26":[{"id":"r_beeab356","projectId":"p_acme","taskId":"t_a6"}],"u_afoster-2026-02-02":[{"id":"r_3d2a752a","projectId":"p_acme","taskId":"t_a6"}],"u_afoster-2026-02-09":[{"id":"r_57d58678","projectId":"p_acme","taskId":"t_a6"}],"u_afoster-2026-02-16":[{"id":"r_c8a79710","projectId":"p_acme","taskId":"t_a6"}],"u_afoster-2026-02-23":[{"id":"r_32a57cf7","projectId":"p_acme","taskId":"t_a6"}],"u_btorres-2026-01-26":[{"id":"r_ed609966","projectId":"p_acme","taskId":"t_a6"},{"id":"r_666138e7","projectId":"p_toll","taskId":"t_t7"}],"u_btorres-2026-02-02":[{"id":"r_586f440a","projectId":"p_acme","taskId":"t_a6"},{"id":"r_b9f4fe29","projectId":"p_toll","taskId":"t_t7"}],"u_btorres-2026-02-09":[{"id":"r_ee7a890a","projectId":"p_acme","taskId":"t_a6"},{"id":"r_6a3fa4c6","projectId":"p_toll","taskId":"t_t7"}],"u_btorres-2026-02-16":[{"id":"r_24a638b8","projectId":"p_acme","taskId":"t_a6"},{"id":"r_62ddfea8","projectId":"p_toll","taskId":"t_t7"}],"u_btorres-2026-02-23":[{"id":"r_e085df6f","projectId":"p_acme","taskId":"t_a6"},{"id":"r_ccfbff62","projectId":"p_toll","taskId":"t_t7"}]};
+  const SEED_HOLIDAYS = [
+    {
+        "id": "h_001",
+        "date": "2026-01-01",
+        "name": "New Year's Day",
+        "countries": [
+            "Canada",
+            "US",
+            "UK",
+            "Italy",
+            "Germany"
+        ]
+    },
+    {
+        "id": "h_002",
+        "date": "2026-01-19",
+        "name": "Martin Luther King Jr. Day",
+        "countries": [
+            "US"
+        ]
+    },
+    {
+        "id": "h_003",
+        "date": "2026-02-16",
+        "name": "Family Day",
+        "countries": [
+            "Canada"
+        ]
+    },
+    {
+        "id": "h_004",
+        "date": "2026-02-16",
+        "name": "Presidents' Day",
+        "countries": [
+            "US"
+        ]
+    },
+    {
+        "id": "h_005",
+        "date": "2026-04-03",
+        "name": "Good Friday",
+        "countries": [
+            "Canada",
+            "UK",
+            "Germany",
+            "Italy"
+        ]
+    },
+    {
+        "id": "h_006",
+        "date": "2026-04-06",
+        "name": "Easter Monday",
+        "countries": [
+            "Canada",
+            "UK",
+            "Germany",
+            "Italy"
+        ]
+    },
+    {
+        "id": "h_007",
+        "date": "2026-05-18",
+        "name": "Victoria Day",
+        "countries": [
+            "Canada"
+        ]
+    },
+    {
+        "id": "h_008",
+        "date": "2026-05-25",
+        "name": "Memorial Day",
+        "countries": [
+            "US"
+        ]
+    },
+    {
+        "id": "h_009",
+        "date": "2026-07-01",
+        "name": "Canada Day",
+        "countries": [
+            "Canada"
+        ]
+    },
+    {
+        "id": "h_010",
+        "date": "2026-07-04",
+        "name": "Independence Day",
+        "countries": [
+            "US"
+        ]
+    },
+    {
+        "id": "h_011",
+        "date": "2026-08-03",
+        "name": "Civic Holiday",
+        "countries": [
+            "Canada"
+        ]
+    },
+    {
+        "id": "h_012",
+        "date": "2026-08-31",
+        "name": "Summer Bank Holiday",
+        "countries": [
+            "UK"
+        ]
+    },
+    {
+        "id": "h_013",
+        "date": "2026-09-07",
+        "name": "Labour Day",
+        "countries": [
+            "Canada",
+            "US"
+        ]
+    },
+    {
+        "id": "h_014",
+        "date": "2026-10-12",
+        "name": "Thanksgiving",
+        "countries": [
+            "Canada"
+        ]
+    },
+    {
+        "id": "h_015",
+        "date": "2026-11-11",
+        "name": "Remembrance Day / Veterans Day",
+        "countries": [
+            "Canada",
+            "US"
+        ]
+    },
+    {
+        "id": "h_016",
+        "date": "2026-11-26",
+        "name": "Thanksgiving (US)",
+        "countries": [
+            "US"
+        ]
+    },
+    {
+        "id": "h_017",
+        "date": "2026-12-25",
+        "name": "Christmas Day",
+        "countries": [
+            "Canada",
+            "US",
+            "UK",
+            "Italy",
+            "Germany"
+        ]
+    },
+    {
+        "id": "h_018",
+        "date": "2026-12-26",
+        "name": "Boxing Day",
+        "countries": [
+            "Canada",
+            "UK"
+        ]
+    }
+];
   const SEED_HEALTH_REPORTS = {};
   const STATUS_CFG = {
     "Not Started": { bg: "bg-slate-100", text: "text-slate-600", bar: "#94a3b8", dot: "bg-slate-400" },
